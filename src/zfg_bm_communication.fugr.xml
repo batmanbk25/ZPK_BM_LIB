@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Communicate between users, system</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZFG_BM_COMMUNICATIONTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZFG_BM_COMMUNICATION</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFM_BM_INTMAIL_SEND</FUNCNAME>
+     <SHORT_TEXT>Send internal mail</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_TO_USER</PARAMETER>
+       <DEFAULT>SY-UNAME</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XUBNAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_TITLE</PARAMETER>
+       <DEFAULT>&apos;Test desciption&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SO_OBJ_DES</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>T_MAIL_CONTENT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>BUBAS_T_MAIL_CONTENT</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_TO_USER</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_TITLE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Short description of contents</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_MAIL_CONTENT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Table with Mail Content</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

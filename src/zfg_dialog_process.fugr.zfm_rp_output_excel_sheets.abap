@@ -1,0 +1,164 @@
+FUNCTION ZFM_RP_OUTPUT_EXCEL_SHEETS.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_REPORT) TYPE  PROGRAMM DEFAULT SY-CPROG
+*"     REFERENCE(I_TABNAME) TYPE  TABNAME OPTIONAL
+*"     REFERENCE(T_DATA) TYPE  TABLE
+*"     REFERENCE(I_LOGICALFILE) TYPE  ESEFTAPPL
+*"     REFERENCE(I_DEFAULT_FILENAME) TYPE  STRING OPTIONAL
+*"     REFERENCE(I_NO_ASK) TYPE  XMARK OPTIONAL
+*"     REFERENCE(I_OPEN_FILE) TYPE  XMARK DEFAULT 'X'
+*"     REFERENCE(I_FOLDER_PATH) TYPE  STRING OPTIONAL
+*"     REFERENCE(I_LARGE_FILE) TYPE  XMARK OPTIONAL
+*"  EXCEPTIONS
+*"      NO_CONFIG
+*"      NO_FIELD_SHEETNAME
+*"--------------------------------------------------------------------
+DATA:
+    LT_SHEETS         TYPE TABLE OF ZTB_EXCEL_SHEETS,
+    LS_SHEET          TYPE ZTB_EXCEL_SHEETS,
+    LT_SHEET_LAYOUT   TYPE TABLE OF ZTB_SHEET_LAYOUT,
+    LS_SHEET_LAYOUT   TYPE ZTB_SHEET_LAYOUT,
+    LT_EXCEL_LAYOUT   TYPE TABLE OF ZTB_EXCEL_LAYOUT,
+    LS_EXCEL_LAYOUT   TYPE ZTB_EXCEL_LAYOUT,
+    LW_WHERE_STR      TYPE STRING,
+    LT_SHEET_EXDAT    TYPE ZTT_SHEET_DATA,
+    LS_SHEET_EXDAT    TYPE ZST_SHEET_DATA,
+    LW_NO_SAME_SHT    TYPE I,
+*   Number of insert sheet: To correct sheet index
+    LW_NO_SHT_INS     TYPE I.
+  FIELD-SYMBOLS:
+    <LF_SHEET_DATA>   TYPE ANY,
+    <LF_CPSHEET>      TYPE TEXT256.
+
+  CLEAR: LT_SHEET_EXDAT[], LW_NO_SHT_INS, LW_NO_SAME_SHT.
+
+* Get list of sheets
+  SELECT *
+    INTO TABLE LT_SHEETS
+    FROM ZTB_EXCEL_SHEETS
+   WHERE REPID = I_REPORT.
+  IF LT_SHEETS[] IS INITIAL.
+    MESSAGE E008 WITH I_REPORT RAISING NO_CONFIG.
+  ENDIF.
+
+* Get Sheet layout
+  SELECT *
+    INTO TABLE LT_SHEET_LAYOUT
+    FROM ZTB_SHEET_LAYOUT
+   WHERE REPORT  = I_REPORT.
+  IF LT_SHEET_LAYOUT[] IS INITIAL.
+    MESSAGE E008 WITH I_REPORT RAISING NO_CONFIG.
+  ENDIF.
+*  BREAK TUANBA.
+
+  SORT LT_SHEETS BY SHEETNO.
+  LOOP AT LT_SHEETS INTO LS_SHEET.
+*   Increase number of sheet was inserted for next process
+    IF LW_NO_SAME_SHT > 0.
+      LW_NO_SHT_INS    = LW_NO_SHT_INS + LW_NO_SAME_SHT - 1.
+    ENDIF.
+
+*   Read sheet data with sheet no or same original sheet no
+    LW_WHERE_STR = LS_SHEET-SHEETNO.
+    CONCATENATE GC_FIELD_SHEETNO ' = ' LW_WHERE_STR
+           INTO LW_WHERE_STR SEPARATED BY SPACE.
+    CLEAR: LW_NO_SAME_SHT.
+    LOOP AT T_DATA ASSIGNING <LF_SHEET_DATA> WHERE (LW_WHERE_STR).
+*     Init
+      CLEAR: LS_SHEET_EXDAT, LT_EXCEL_LAYOUT[].
+      LW_NO_SAME_SHT = LW_NO_SAME_SHT + 1.
+
+*     No have original to copy
+      IF LS_SHEET-CPSHEET IS INITIAL.
+*       Sheet number = sheet number in config
+        LS_SHEET_EXDAT-SHEETNO      = LS_SHEET-SHEETNO.
+        LS_SHEET_EXDAT-SHEET_NAME   = LS_SHEET-SHEETNAME.
+      ELSE.
+*       Sheet number: Increase from original sheet index
+*       Note: Correct sheet number when insert new sheet: LW_NO_SHT_INS
+        LS_SHEET_EXDAT-ORG_SHEETIX  = LS_SHEET-SHEETNO + LW_NO_SHT_INS.
+        LS_SHEET_EXDAT-SHEETNO      = LS_SHEET-SHEETNO + LW_NO_SHT_INS
+                                    + LW_NO_SAME_SHT - 1.
+        ASSIGN COMPONENT LS_SHEET-CPSHEET OF STRUCTURE <LF_SHEET_DATA>
+          TO <LF_CPSHEET>.
+        IF SY-SUBRC IS INITIAL.
+          LS_SHEET_EXDAT-SHEET_NAME = <LF_CPSHEET>.
+        ELSE.
+          MESSAGE E009 RAISING NO_FIELD_SHEETNAME.
+        ENDIF.
+      ENDIF.
+
+*     Get layout config each sheet
+      LOOP AT LT_SHEET_LAYOUT INTO LS_SHEET_LAYOUT
+        WHERE SHEETNO = LS_SHEET-SHEETNO.
+        MOVE-CORRESPONDING LS_SHEET_LAYOUT TO LS_EXCEL_LAYOUT.
+        APPEND LS_EXCEL_LAYOUT TO LT_EXCEL_LAYOUT.
+      ENDLOOP.
+
+*     Get header data to export
+      CALL FUNCTION 'ZFM_FILE_EXCEL_GET_HEADER'
+        EXPORTING
+          I_REPORT       = I_REPORT
+          I_TABNAME      = I_TABNAME
+          I_HEADER       = <LF_SHEET_DATA>
+          T_EXCEL_LAYOUT = LT_EXCEL_LAYOUT
+          I_LARGE_FILE   = I_LARGE_FILE
+        IMPORTING
+          E_PAGESETUP    = LS_SHEET_EXDAT-I_PAGESETUP
+          T_EXCEL_EXP    = LS_SHEET_EXDAT-T_SQUARE_DATA.
+      IF I_LARGE_FILE = GC_XMARK.
+*       Get item data to export
+        CALL FUNCTION 'ZFM_FILE_EXCEL_GET_ITEMS_NUM'
+          EXPORTING
+            I_REPORT       = I_REPORT
+            I_DATA         = <LF_SHEET_DATA>
+            T_EXCEL_LAYOUT = LT_EXCEL_LAYOUT
+          IMPORTING
+            T_EXCEL_EXP    = LS_SHEET_EXDAT-T_SQUARE_DATA.
+      ELSE.
+*       Get item data to export
+        CALL FUNCTION 'ZFM_FILE_EXCEL_GET_ITEMS'
+          EXPORTING
+            I_REPORT       = I_REPORT
+            I_DATA         = <LF_SHEET_DATA>
+            T_EXCEL_LAYOUT = LT_EXCEL_LAYOUT
+          IMPORTING
+            T_EXCEL_EXP    = LS_SHEET_EXDAT-T_SQUARE_DATA.
+      ENDIF.
+      APPEND LS_SHEET_EXDAT TO LT_SHEET_EXDAT.
+    ENDLOOP.
+  ENDLOOP.
+
+* Export to multi sheets
+  CALL FUNCTION 'ZFM_FILE_EXCEL_EXPORT_SHEETS'
+    EXPORTING
+     I_LOGICALFILE                 = I_LOGICALFILE
+     T_SHEET_DATA                  = LT_SHEET_EXDAT
+     I_NO_ASK                      = I_NO_ASK
+     I_DEFAULT_FILENAME            = I_DEFAULT_FILENAME
+     I_FOLDER_PATH                 = I_FOLDER_PATH
+     I_OPEN_FILE                   = I_OPEN_FILE
+     I_LARGE_FILE                  = I_LARGE_FILE
+   EXCEPTIONS
+     SAVE_TEMPLATE_ERR             = 1
+     OPEN_FILE_ERR                 = 2
+     EXPORT_ERR                    = 3
+     OTHERS                        = 4.
+  CASE SY-SUBRC.
+    WHEN 1.
+      MESSAGE S003 DISPLAY LIKE GC_MTYPE_E.
+    WHEN 2.
+      MESSAGE S004 DISPLAY LIKE GC_MTYPE_E.
+    WHEN 3.
+      MESSAGE S005 DISPLAY LIKE GC_MTYPE_E.
+    WHEN 4.
+      MESSAGE S006 DISPLAY LIKE GC_MTYPE_E.
+  ENDCASE.
+
+
+
+
+
+ENDFUNCTION.

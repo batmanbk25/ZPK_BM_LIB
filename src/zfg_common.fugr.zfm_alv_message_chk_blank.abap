@@ -1,0 +1,62 @@
+FUNCTION ZFM_ALV_MESSAGE_CHK_BLANK.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(I_REQSTR) TYPE  TABNAME OPTIONAL
+*"  CHANGING
+*"     REFERENCE(C_ALVLINE) TYPE  ANY OPTIONAL
+*"--------------------------------------------------------------------
+DATA:
+    LT_BLANK_FIELDS       TYPE LVC_T_FCAT,
+    LT_FIELDCAT           TYPE LVC_T_FCAT,
+    LS_FCAT               TYPE LVC_S_FCAT,
+    LW_MESSAGE            TYPE TEXT256,
+    LW_TABNAME            TYPE TABNAME.
+
+* Get data type of field
+  DESCRIBE FIELD C_ALVLINE HELP-ID LW_TABNAME.
+  IF I_REQSTR IS INITIAL.
+    CONCATENATE LW_TABNAME '_REQ' INTO I_REQSTR.
+  ENDIF.
+
+  CALL FUNCTION 'ZFM_DATA_GET_FIELD_BLANK'
+    EXPORTING
+      I_DATA              = C_ALVLINE
+      I_STRUCTURE         = I_REQSTR
+    IMPORTING
+      T_FIELD_BLANK       = LT_BLANK_FIELDS
+   EXCEPTIONS
+     NO_STRUCTURE        = 1
+     OTHERS              = 2.
+
+* Get table name and field category
+  CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+    EXPORTING
+      I_STRUCTURE_NAME       = LW_TABNAME
+      I_INTERNAL_TABNAME     = LW_TABNAME
+    CHANGING
+      CT_FIELDCAT            = LT_FIELDCAT
+    EXCEPTIONS
+      INCONSISTENT_INTERFACE = 1
+      PROGRAM_ERROR          = 2
+      OTHERS                 = 3.
+
+  LOOP AT LT_BLANK_FIELDS INTO LS_FCAT.
+    READ TABLE LT_FIELDCAT INTO LS_FCAT
+      WITH KEY FIELDNAME = LS_FCAT-FIELDNAME.
+    IF SY-SUBRC IS INITIAL.
+      MESSAGE S001(ZMS_COL_LIB) WITH LS_FCAT-SCRTEXT_L
+        INTO LW_MESSAGE.
+      CALL FUNCTION 'ZFM_ALV_MESSAGE_PUT'
+        EXPORTING
+          I_MESSAGE       = LW_MESSAGE
+        CHANGING
+          C_ALVLINE       = C_ALVLINE.
+    ENDIF.
+  ENDLOOP.
+
+
+
+
+
+ENDFUNCTION.

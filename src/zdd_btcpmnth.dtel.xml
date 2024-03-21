@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZDD_BTCPMNTH</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>NUM02</DOMNAME>
+    <HEADLEN>20</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>15</SCRLEN2>
+    <SCRLEN3>20</SCRLEN3>
+    <DDTEXT>Duration period (in months) for a batch job</DDTEXT>
+    <REPTEXT>Months</REPTEXT>
+    <SCRTEXT_S>Months</SCRTEXT_S>
+    <SCRTEXT_M>Months</SCRTEXT_M>
+    <SCRTEXT_L>Months</SCRTEXT_L>
+    <APPLCLASS>SBTC</APPLCLASS>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>D</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>D</DDLANGUAGE>
+     <DDTEXT>Periodendauer (Monate) fuer einen Batch-Job</DDTEXT>
+     <REPTEXT>periodischer Job</REPTEXT>
+     <SCRTEXT_S>Job</SCRTEXT_S>
+     <SCRTEXT_M>periodischer Job</SCRTEXT_M>
+     <SCRTEXT_L>periodischer Job</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

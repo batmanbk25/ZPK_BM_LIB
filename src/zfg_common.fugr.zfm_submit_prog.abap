@@ -1,0 +1,32 @@
+FUNCTION ZFM_SUBMIT_PROG.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_CPROG) TYPE  SYCPROG DEFAULT SY-CPROG
+*"     REFERENCE(I_SPROG) TYPE  REPID
+*"     REFERENCE(I_NO_AUTO_MAP) TYPE  XMARK OPTIONAL
+*"     REFERENCE(T_RSPARAM) TYPE  RSPARAMS_TT OPTIONAL
+*"--------------------------------------------------------------------
+DATA:
+    LS_RSPARAM      TYPE RSPARAMS,
+    LT_RSPARAM      TYPE TABLE OF RSPARAMS.
+
+  CLEAR: LT_RSPARAM .
+  IF I_NO_AUTO_MAP IS INITIAL.
+    CALL FUNCTION 'ZFM_SUBMIT_GET_PARA'
+      EXPORTING
+        I_CPROG   = I_CPROG
+        I_SPROG   = I_SPROG
+      IMPORTING
+        T_RSPARAM = LT_RSPARAM.
+  ELSE.
+    LT_RSPARAM = T_RSPARAM.
+  ENDIF.
+
+  SUBMIT (I_SPROG) WITH SELECTION-TABLE LT_RSPARAM AND RETURN.
+
+
+
+
+
+ENDFUNCTION.

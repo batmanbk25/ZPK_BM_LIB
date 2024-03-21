@@ -1,0 +1,35 @@
+FUNCTION ZFM_RP_OUTPUT_XLWB.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(IV_FORMNAME) TYPE  ZDD_BM_XLWBF
+*"     REFERENCE(IV_CONTEXT_REF) TYPE  ANY
+*"     REFERENCE(I_DEFAULT_FILENAME) TYPE  STRING OPTIONAL
+*"     VALUE(IV_VIEWER_TITLE) TYPE  ANY DEFAULT SY-TITLE
+*"     REFERENCE(IV_PROTECT) TYPE  FLAG OPTIONAL
+*"  EXCEPTIONS
+*"      FORM_NOT_EXISTS
+*"----------------------------------------------------------------------
+
+* Check form name exists
+  PERFORM 9999_CHECK_XLWB_FORM_EXISTS
+    USING IV_FORMNAME.
+
+* Show Excel by XLSX library
+  CALL FUNCTION 'ZFM_BM_XLWB_CALLFORM'
+    EXPORTING
+      IV_FORMNAME             = IV_FORMNAME
+      IV_CONTEXT_REF          = IV_CONTEXT_REF
+      IV_VIEWER_TITLE         = IV_VIEWER_TITLE
+      I_DEFAULT_FILENAME      = I_DEFAULT_FILENAME
+      IV_PROTECT              = IV_PROTECT
+    EXCEPTIONS
+      PROCESS_TERMINATED      = 1
+      OTHERS                  = 2.
+  IF SY-SUBRC <> 0.
+    MESSAGE ID SY-MSGID TYPE GC_MTYPE_E NUMBER SY-MSGNO
+          WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4
+       RAISING PROCESS_TERMINATED .
+  ENDIF.
+
+ENDFUNCTION.

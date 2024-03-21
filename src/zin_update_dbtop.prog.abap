@@ -1,0 +1,65 @@
+*&---------------------------------------------------------------------*
+*& Include ZIN_UPDATE_DBTOP                             Report
+*ZPG_UPDATE_DB
+*&
+*&---------------------------------------------------------------------*
+
+* Global data definition
+TYPE-POOLS RSDS.
+TYPES:
+  BEGIN OF GTY_FIELD.
+INCLUDE TYPE LVC_S_FCAT.
+TYPES:    VALUE           TYPE CHAR100,
+END OF GTY_FIELD,
+
+GTY_T_FIELD TYPE TABLE OF GTY_FIELD,
+
+BEGIN OF GTY_S_RANGES_TAB,
+    SIGN(1)     TYPE C,
+    OPTION(2)   TYPE C,
+    LOW(255)    TYPE C,
+    HIGH(255)   TYPE C,
+END OF GTY_S_RANGES_TAB,
+
+BEGIN OF GTY_SELECTION,
+    FIELDNAME  LIKE DD03D-FIELDNAME,          "Field name
+    RANGES_TAB  TYPE GTY_S_RANGES_TAB OCCURS 0,    "Range table
+    LOG_COND(3) TYPE C,                       "Logical condition
+END OF GTY_SELECTION,
+
+GTY_SELECTION_T TYPE GTY_SELECTION OCCURS 0.
+
+DATA:
+  GT_DATA TYPE REF TO DATA,
+* Custom control
+  ZCTR_ALV_CONTAINER  TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+* Alv grid
+  ZCTR_ALVGRID        TYPE REF TO CL_GUI_ALV_GRID,
+
+  GT_FIELDS           TYPE TABLE OF GTY_FIELD,
+  GS_FIELD            TYPE GTY_FIELD,
+  GT_KEYS             TYPE TABLE OF FIELDNAME,
+
+  BEGIN OF GT_SELECTION OCCURS 0,
+        FIELDNAME LIKE DD03D-FIELDNAME,          "Field name
+        RANGES_TAB TYPE GTY_S_RANGES_TAB OCCURS 0,    "Range table
+        LOG_COND(3) TYPE C,                       "Logical condition
+  END OF GT_SELECTION,
+
+  GT_WHERE_CLAUSES  TYPE RSDS_WHERE_TAB,      "Where clause
+  GW_USE_DYNAMIC_SELECTION  TYPE XMARK,
+  GT_RSDS_TRANGE  TYPE RSDS_TRANGE,
+  GW_SEL_ID       TYPE RSDYNSEL-SELID.
+
+FIELD-SYMBOLS:
+    <GFT_DATA_TABLE> TYPE TABLE,
+    <GF_DATA_STR>    TYPE ANY,
+    <GFT_DATA_OLD>   TYPE TABLE,
+    <GFT_DATA_ORG>   TYPE TABLE.
+
+PARAMETERS:
+ P_TABLE              TYPE DD03L-TABNAME OBLIGATORY VALUE CHECK,
+ P_DELDAT             TYPE XMARK.
+
+CONTROLS:
+  TAB_SEL_FIELDS TYPE TABLEVIEW USING SCREEN 200.

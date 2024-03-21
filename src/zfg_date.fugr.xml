@@ -1,0 +1,764 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Function group for date</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZFG_DATETOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZFG_DATE</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFM_DATE_CONV_TO_INTERNAL</FUNCNAME>
+     <SHORT_TEXT>Convert date from external to internal</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_DATE_STR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EXT_FORMAT</PARAMETER>
+       <DEFAULT>&apos;DD/MM/YYYY&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZDD_BM_DATE_FORMAT</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_DATE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSEXP>
+     </EXPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>INVALID_DATE</EXCEPTION>
+      </RSEXC>
+      <RSEXC>
+       <EXCEPTION>INVALID_FORMAT</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_DATE_STR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>DATE string</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EXT_FORMAT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Date format</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_DATE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Date</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>INVALID_DATE</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>Invalid date</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>INVALID_FORMAT</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>Invalid format date</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_DATE_CONV_TO_OUTPUT</FUNCNAME>
+     <SHORT_TEXT>Convert date to output</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_DATE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_ORDINAL</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_DATE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_DATE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Date</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_ORDINAL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Ordinal ex: 1st, 2nd, 4th</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_DATE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_DATE_CONV_TSTAMP_DATETIME</FUNCNAME>
+     <SHORT_TEXT>Convert Time stamp to date time</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_CURRENT</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_TIMESTAMP</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TIMESTAMP</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SHORTDATE</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_DATETIME</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_CURRENT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_TIMESTAMP</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>UTC Time Stamp in Short Form (YYYYMMDDhhmmss)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SHORTDATE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>&apos;X&apos;: Short date, SPACE: Long date</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_DATETIME</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_DATE_GET_PERIOD</FUNCNAME>
+     <SHORT_TEXT>Get period by date</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_DATE</PARAMETER>
+       <DEFAULT>SY-DATUM</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATS</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_GET_QUARTER</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_MONTH</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>PERSL_KK</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_QUARTER</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>PERSL_KK</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_PREDC</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>PREDC_KK</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_PERSLT_KK</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>PERSLT_KK</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>T_TFKPERIOD</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTT_TFKPERIOD</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_DATE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Date</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_GET_QUARTER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Blank get month, &apos;X&apos; get quarter</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_MONTH</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Key for Period Assignment</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_QUARTER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Key for Period Assignment</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_PREDC</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Previous Period</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_PERSLT_KK</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Text for Period Key</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_TFKPERIOD</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Period definition</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_DATE_MONTH_TO_QUARTER</FUNCNAME>
+     <SHORT_TEXT>Get quarter of month</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_YEAR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>NUMC4</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_MONTH</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>NUMC2</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_QUARTER</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>PERSL_KK</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_QUARTER_NM</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>PERSLT_KK</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_YEAR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Count parameters</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_MONTH</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Two digit number</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_QUARTER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Key for Period Assignment</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_QUARTER_NM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Text for Period Key</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_DATE_SPELL</FUNCNAME>
+     <SHORT_TEXT>Spell date</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_DATUM</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SPMON</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SPMON</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_DATET</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_DATUM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Date to spell</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SPMON</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Month to spell</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_DATET</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Spell result</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_GET_FIRST_END_DATE_PERIOD</FUNCNAME>
+     <SHORT_TEXT>Get first, last date of period (Month, Quarter, Year)</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_DATE</PARAMETER>
+       <DEFAULT>SY-DATUM</DEFAULT>
+       <TYP>DATUM</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_FOR_MONTH</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_FOR_QUARTER</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_FOR_YEAR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_BEGDA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_ENDDA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSEXP>
+     </EXPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>NO_TYPE_TO_GET</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_DATE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Current date</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_FOR_MONTH</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Get first, late date of month</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_FOR_QUARTER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Get first, late date of quarter</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_FOR_YEAR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Get first, late date of year</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_BEGDA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Begin Date</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_ENDDA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>End Date</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NO_TYPE_TO_GET</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>No type (month, quater, year) to get date</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_GET_FIRST_LAST_DAY_QUARTER</FUNCNAME>
+     <SHORT_TEXT>Get begin and end date of a quarter (must use date or quarter and year)</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_QUARTER</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_YEAR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>GJAHR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DATE</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_BEGDA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_ENDDA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_BEGMO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SPMON</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_ENDMO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SPMON</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_QUARTER</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_YEAR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Fiscal Year</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DATE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Date in quarter</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_BEGDA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Begin Date of quater</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_ENDDA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>End Date of quater</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_BEGMO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Begin month</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_ENDMO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>End month</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_MONTH_YEAR_SHLP_EXIT</FUNCNAME>
+     <SHORT_TEXT>Example for a search help exit</SHORT_TEXT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>SHLP</PARAMETER>
+       <TYP>SHLP_DESCR</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>CALLCONTROL</PARAMETER>
+       <DBFIELD>DDSHF4CTRL</DBFIELD>
+      </RSCHA>
+     </CHANGING>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>SHLP_TAB</PARAMETER>
+       <TYP>SHLP_DESCT</TYP>
+      </RSTBL>
+      <RSTBL>
+       <PARAMETER>RECORD_TAB</PARAMETER>
+       <DBSTRUCT>SEAHLPRES</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>SHLP_TAB</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Table of elementary search helps</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>RECORD_TAB</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Hit list</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>SHLP</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Single (current) search help</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>CALLCONTROL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Control of the F4 process</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+   <LONGTEXTS_ZFM_MONTH_YEAR_SHLP_EXIT>
+    <item>
+     <DOKIL>
+      <ID>FU</ID>
+      <OBJECT>ZFM_MONTH_YEAR_SHLP_EXIT</OBJECT>
+      <LANGU>D</LANGU>
+      <TYP>T</TYP>
+      <VERSION>0001</VERSION>
+      <MASTERLANG>X</MASTERLANG>
+      <TXTLINES>00018</TXTLINES>
+      <DOKSTATE>R</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZFM_MONTH_YEAR_SHLP_EXIT</TDNAME>
+      <TDID>FU</TDID>
+      <TDSPRAS>D</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00001</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;FUNCTIONALITY&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Dieser Baustein dient nur als Beispiel für die Schnittstelle und die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Gestaltung von &lt;DS:TX.DDDOK_SHLP_EXIT&gt;Suchhilfe-Exits&lt;/&gt; in</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&lt;DS:TX.DDDOK_SHLP_SEARCHHELP&gt;Suchhilfen&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Alle hier definierten Schnittstellenparameter sind für einen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Funktionsbaustein, der als Suchhilfe-Exit dienen soll, obligatorisch,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>weil der Rufer des Bausteins nicht weiß, welche Parameter intern</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>wirklich benutzt werden.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Ein Suchhilfe-Exit wird zu mehreren</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&lt;DS:TX.DDDOK_SHLP_STEP&gt;Zeitpunkten&lt;/&gt; während des F4-Ablaufs</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>aufgerufen. In CALLCONTROL-STEP wird der jeweilige Schritt des Ablaufs</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>mitgegeben. Wenn der Baustein nur einige Modifikationen vor dem Schritt</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>durchführen möchte, sollte CALLCONTROL-STEP unverändert bleiben.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Wenn der Schritt dagegen vollständig von dem Baustein übernommen wird,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>muß in CALLCONTROL-STEP der Folgeschritt zurückgegeben werden.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Beachten Sie hierzu bitte die ausführliche Dokumentation zum Konzept</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>der Suchhilfe-Exits.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Der Baustein muß auf alle Schritte, die er nicht kennt, bzw. die er</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>nicht behandeln will, mit einem sofortigen EXIT reagieren.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;EXAMPLE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;HINTS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;FURTHER_SOURCES_OF_INF&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>FU</ID>
+      <OBJECT>ZFM_MONTH_YEAR_SHLP_EXIT</OBJECT>
+      <LANGU>E</LANGU>
+      <TYP>T</TYP>
+      <VERSION>0001</VERSION>
+      <TXTLINES>00017</TXTLINES>
+      <DOKSTATE>R</DOKSTATE>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZFM_MONTH_YEAR_SHLP_EXIT</TDNAME>
+      <TDID>FU</TDID>
+      <TDSPRAS>E</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00001</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;FUNCTIONALITY&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>This module has been created as an example for the interface and design</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>of &lt;DS:TX.DDDOK_SHLP_EXIT&gt;Search help exits&lt;/&gt; in</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>&lt;DS:TX.DDDOK_SHLP_SEARCHHELP&gt;Search help&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>All the interface parameters defined here are mandatory for a function</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>module to be used as a search help exit, because the calling program</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>does not know which parameters are actually used internally.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>A search help exit is called repeatedly in connection with several</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>&lt;DS:TX.DDDOK_SHLP_STEP&gt;events&lt;/&gt; during the F4 process. The relevant</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>step of the process is passed on in the CALLCONTROL step. If the module</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>is intended to perform only a few modifications before the step,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>CALLCONTROL-STEP should remain unchanged.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>However, if the step is performed completely by the module, the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>following step must be returned in CALLCONTROL-STEP.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>For more detailed information please refer to the documentation</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>describing the concept of the search help exit.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The module must react with an immediate EXIT to all steps that it does</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>not know or does not want to handle.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;EXAMPLE&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;HINTS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;FURTHER_SOURCES_OF_INF&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+      </TLINE>
+     </LINES>
+    </item>
+   </LONGTEXTS_ZFM_MONTH_YEAR_SHLP_EXIT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

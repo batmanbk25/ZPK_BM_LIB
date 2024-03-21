@@ -1,0 +1,45 @@
+FUNCTION ZFM_DATA_COND_CHECK_FIT.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_REPID) TYPE  REPID DEFAULT SY-CPROG
+*"     REFERENCE(I_RECORD) TYPE  ANY
+*"     REFERENCE(I_FIELD_RANGE) TYPE  RSDSFRANGE_S_SSEL
+*"  EXPORTING
+*"     REFERENCE(E_FIT) TYPE  XMARK
+*"----------------------------------------------------------------------
+  DATA:
+    LS_FLD_RANGE              TYPE RSDSFRANGE_S_SSEL,
+    LS_RANGE                  TYPE RSDSSELOPT,
+    LT_RANGE                  TYPE RSDSSELOPT_T.
+  FIELD-SYMBOLS:
+    <LW_RANGE>                TYPE RSDSSELOPT,
+    <LW_FIELD>                TYPE ANY.
+
+* Init
+  LS_FLD_RANGE   = I_FIELD_RANGE.
+
+* Standardlize Low, High values
+  LOOP AT LS_FLD_RANGE-SELOPT_T ASSIGNING <LW_RANGE>.
+    CALL FUNCTION 'ZFM_DATA_COND_STANDARDLIZE'
+      EXPORTING
+        I_REPID  = I_REPID
+        I_RECORD = I_RECORD
+      CHANGING
+        C_RANGE   = <LW_RANGE>.
+  ENDLOOP.
+
+* Check condition
+  ASSIGN COMPONENT LS_FLD_RANGE-FIELDNAME OF STRUCTURE I_RECORD
+    TO <LW_FIELD>.
+  IF SY-SUBRC IS INITIAL.
+    IF <LW_FIELD> IN LS_FLD_RANGE-SELOPT_T.
+      E_FIT = GC_XMARK.
+    ELSE.
+      CLEAR: E_FIT.
+    ENDIF.
+  ELSE.
+    MESSAGE A011(ZMS_LIB_PROG) WITH LS_FLD_RANGE-FIELDNAME.
+  ENDIF.
+
+ENDFUNCTION.

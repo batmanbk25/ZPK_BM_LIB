@@ -1,0 +1,25 @@
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates" xmlns:ddic="http://www.sap.com/abapxml/types/dictionary" xmlns:def="http://www.sap.com/abapxml/types/defined">
+  <tt:root name="ROOT" type="?"/>
+  <tt:root name="DATA" type="ddic:ZST_BM_CHART_STD_DATA"/>
+  <tt:template>
+    <SimpleChartData>
+      <Categories>
+        <tt:attribute name="label" value-ref=".DATA.CATEGORIES.CAT_TITLE"/>
+        <tt:loop ref=".DATA.CATEGORIES.VALUES">
+          <C tt:value-ref="VALUE"/>
+        </tt:loop>
+      </Categories>
+      <tt:loop ref=".DATA.SERIES">
+        <Series>
+          <tt:attribute name="label" value-ref="SERI_TITLE"/>
+          <tt:attribute name="customizing" value-ref="SERI_FIELD"/>
+          <tt:loop ref="VALUES">
+            <S tt:value-ref="VALUE">
+            </S>
+          </tt:loop>
+        </Series>
+      </tt:loop>
+    </SimpleChartData>
+  </tt:template>
+</tt:transform>

@@ -1,0 +1,85 @@
+FUNCTION ZFM_BM_INTMAIL_SEND.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_TO_USER) TYPE  XUBNAME DEFAULT SY-UNAME
+*"     REFERENCE(I_TITLE) TYPE  SO_OBJ_DES DEFAULT 'Test desciption'
+*"     REFERENCE(T_MAIL_CONTENT) TYPE  BUBAS_T_MAIL_CONTENT
+*"----------------------------------------------------------------------
+
+  DATA :
+    LS_MAILDATA               TYPE SODOCCHGI1,
+    LT_PACKING_LIST           TYPE STANDARD TABLE OF SOPCKLSTI1,
+    LS_PACKING_LIST           TYPE SOPCKLSTI1,
+    LS_MAILTXT                TYPE SOLISTI1,
+    LT_MAILTXT                TYPE TABLE OF SOLISTI1,
+    LS_MAILREC                TYPE SOMLRECI1,
+    LT_MAILREC                TYPE TABLE OF SOMLRECI1.
+
+  CLEAR : LS_MAILDATA, LS_MAILTXT, LS_MAILREC.
+  REFRESH:  LT_MAILTXT, LT_MAILREC.
+
+* Mail attributes
+  LS_MAILDATA-OBJ_NAME        = 'IntMail'.
+  LS_MAILDATA-OBJ_DESCR       = I_TITLE.
+  LS_MAILDATA-OBJ_LANGU       = SY-LANGU.
+
+* Mail contents
+  IF T_MAIL_CONTENT IS INITIAL.
+    LS_MAILTXT-LINE = 'This is a test mail'.
+    APPEND LS_MAILTXT TO LT_MAILTXT.
+    APPEND LS_MAILTXT TO LT_MAILTXT.
+  ELSE.
+    LT_MAILTXT = T_MAIL_CONTENT.
+  ENDIF.
+
+* Receivers
+  LS_MAILREC-RECEIVER         = I_TO_USER.
+  LS_MAILREC-REC_TYPE         = 'B'.
+  LS_MAILREC-COM_TYPE         = 'INT'.
+  LS_MAILREC-EXPRESS          = 'X'.
+  APPEND LS_MAILREC TO LT_MAILREC.
+
+* Describe the body of the message
+  CLEAR LS_PACKING_LIST.
+  REFRESH LT_PACKING_LIST.
+  LS_PACKING_LIST-DOC_TYPE    = 'RAW'.
+  LS_PACKING_LIST-TRANSF_BIN  = SPACE.
+  LS_PACKING_LIST-HEAD_START  = 1.
+  LS_PACKING_LIST-HEAD_NUM    = 0.
+  LS_PACKING_LIST-BODY_START  = 1.
+  DESCRIBE TABLE LT_MAILTXT[] LINES LS_PACKING_LIST-BODY_NUM.
+  APPEND LS_PACKING_LIST TO LT_PACKING_LIST.
+
+* Send internal mail
+  CALL FUNCTION 'SO_NEW_DOCUMENT_SEND_API1'
+    EXPORTING
+      DOCUMENT_DATA              = LS_MAILDATA
+      DOCUMENT_TYPE              = 'RAW'
+      PUT_IN_OUTBOX              = 'X'
+      COMMIT_WORK                = 'X'
+*    IMPORTING
+*      SENT_TO_ALL                =
+*      NEW_OBJECT_ID             =
+    TABLES
+      OBJECT_HEADER              = LT_MAILTXT
+      OBJECT_CONTENT             = LT_MAILTXT
+      RECEIVERS      = LT_MAILREC
+    EXCEPTIONS
+      TOO_MANY_RECEIVERS         = 1
+      DOCUMENT_NOT_SENT          = 2
+      DOCUMENT_TYPE_NOT_EXIST    = 3
+      OPERATION_NO_AUTHORIZATION = 4
+      PARAMETER_ERROR            = 5
+      X_ERROR                    = 6
+      ENQUEUE_ERROR              = 7
+      OTHERS                     = 8.
+
+  IF SY-SUBRC <> 0.
+    MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+    WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+
+  ENDIF.
+
+
+ENDFUNCTION.

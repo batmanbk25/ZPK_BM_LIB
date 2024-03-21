@@ -1,0 +1,67 @@
+FUNCTION ZFM_SUBMIT_GET_PARA.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_CPROG) TYPE  SYCPROG
+*"     REFERENCE(I_SPROG) TYPE  REPID
+*"  EXPORTING
+*"     REFERENCE(T_RSPARAM) TYPE  RSPARAMS_TT
+*"--------------------------------------------------------------------
+DATA:
+      LT_MAP_SELSCR   TYPE TABLE OF ZTB_MAP_SELSCR,
+      LS_MAP_SELSCR   TYPE ZTB_MAP_SELSCR,
+      LS_RSPARAM      TYPE RSPARAMS,
+      LT_RSPARAM      TYPE TABLE OF RSPARAMS,
+      LW_FULLFNAME    TYPE CHAR100,
+      LS_DATA         TYPE REF TO DATA.
+  FIELD-SYMBOLS:
+    <LF_DATA>       TYPE ANY,
+    <LFT_SELOPT>    TYPE ANY TABLE,
+    <LF_SELOPT>     TYPE ANY.
+
+* Get mapping selection screen element
+  SELECT *
+    INTO TABLE LT_MAP_SELSCR
+    FROM ZTB_MAP_SELSCR
+   WHERE CPROG = I_CPROG
+     AND SPROG = I_SPROG.
+
+* Read data on selection screen
+  LOOP AT LT_MAP_SELSCR INTO LS_MAP_SELSCR.
+    BEGIN.
+    LS_RSPARAM-SELNAME  = LS_MAP_SELSCR-SPFNM.
+    LS_RSPARAM-KIND     = LS_MAP_SELSCR-SPFTY.
+    CASE LS_MAP_SELSCR-CPFTY.
+      WHEN 'P'.
+        LS_RSPARAM-SIGN     = 'I'.
+        LS_RSPARAM-OPTION   = 'EQ'.
+        CONCATENATE '(' LS_MAP_SELSCR-CPROG ')' LS_MAP_SELSCR-CPFNM
+               INTO LW_FULLFNAME.
+        ASSIGN (LW_FULLFNAME) TO <LF_DATA>.
+        CHECK SY-SUBRC = 0.
+        IF <LF_DATA> IS NOT INITIAL OR LS_MAP_SELSCR-SPFTY = 'P'.
+          LS_RSPARAM-LOW = <LF_DATA>.
+          APPEND LS_RSPARAM TO LT_RSPARAM.
+        ENDIF.
+      WHEN 'S'.
+        CONCATENATE '(' LS_MAP_SELSCR-CPROG ')'
+                    LS_MAP_SELSCR-CPFNM '[]'
+              INTO LW_FULLFNAME.
+        ASSIGN (LW_FULLFNAME) TO <LFT_SELOPT>.
+        CHECK SY-SUBRC = 0.
+        CREATE DATA LS_DATA LIKE LINE OF <LFT_SELOPT>.
+        ASSIGN LS_DATA->* TO <LF_SELOPT>.
+        LOOP AT <LFT_SELOPT> ASSIGNING <LF_SELOPT>.
+          MOVE-CORRESPONDING <LF_SELOPT> TO LS_RSPARAM.
+          APPEND LS_RSPARAM TO LT_RSPARAM.
+        ENDLOOP.
+      WHEN OTHERS.
+    ENDCASE.
+  ENDLOOP.
+  T_RSPARAM = LT_RSPARAM.
+
+
+
+
+
+ENDFUNCTION.

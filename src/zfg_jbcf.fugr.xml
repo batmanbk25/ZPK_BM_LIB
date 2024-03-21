@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Job config</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZFG_JBCFTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZFG_JBCF</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFM_JBCF_CREATE_JOB</FUNCNAME>
+     <SHORT_TEXT>Create job</SHORT_TEXT>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_JBCF_GET_CONFIG</FUNCNAME>
+     <SHORT_TEXT>Get config</SHORT_TEXT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>T_JBCF_JOB_ALL</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTT_JBCF_JOB_ALL</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>T_JBCF_JOB_ALL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Job all</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFM_JBCF_JOB_CREATE_SINGLE</FUNCNAME>
+     <SHORT_TEXT>Create single job</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_JBCF_JOB_ALL</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZST_JBCF_JOB</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_JOBCOUNT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TBTCJOB-JOBCOUNT</TYP>
+      </RSEXP>
+     </EXPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>JOB_CREATE_ERROR</EXCEPTION>
+      </RSEXC>
+      <RSEXC>
+       <EXCEPTION>JOB_STEP_CREATE_ERROR</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_JBCF_JOB_ALL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Job info</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_JOBCOUNT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Job ID</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>JOB_CREATE_ERROR</PARAMETER>
+       <KIND>X</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>JOB_STEP_CREATE_ERROR</PARAMETER>
+       <KIND>X</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

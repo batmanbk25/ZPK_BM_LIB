@@ -1,0 +1,106 @@
+FUNCTION ZFM_BM_DATA_FROM_XML_FILE.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_SHOWDATA) TYPE  XMARK OPTIONAL
+*"     REFERENCE(I_UPDATE_DB) TYPE  XMARK OPTIONAL
+*"----------------------------------------------------------------------
+
+  DATA:
+    LW_XML_STR  TYPE STRING,
+    LW_XML_XSTR TYPE XSTRING,
+    LS_TAB_DATA TYPE ZST_BM_DATA_XML,
+    BEGIN OF LS_TAB_RAW,
+      TABNM TYPE TABNAME,
+      DATA  TYPE REF TO DATA,
+    END OF LS_TAB_RAW,
+    LT_TAB_DATA TYPE TABLE OF ZST_BM_DATA_XML,
+    LT_FIELDCAT TYPE TABLE OF LVC_T_FCAT,
+    LS_FIELDCAT TYPE LVC_T_FCAT.
+
+* Popup save file
+  CALL FUNCTION 'ZFM_POPUP_FILE_OPEN'
+    EXPORTING
+      I_EXTENSION  = 'xml'
+    IMPORTING
+      E_FILEDATA   = LW_XML_STR
+      E_FILEDATA_X = LW_XML_XSTR
+*     ET_BIN_TAB   =
+    .
+
+*  CONCATENATE LINES OF LT_XML_STR INTO LW_XML_STR.
+
+  CALL TRANSFORMATION ID
+*    SOURCE XML LW_XML_STR
+    SOURCE XML LW_XML_XSTR
+    RESULT DATA = GT_XML_DATA.
+
+  LOOP AT LT_TAB_DATA INTO LS_TAB_DATA.
+    CREATE DATA LS_TAB_RAW-DATA TYPE TABLE OF (LS_TAB_DATA-TABNM).
+
+    CALL TRANSFORMATION ID
+      SOURCE XML LS_TAB_DATA-XMLSTR
+      RESULT DATA = LS_TAB_RAW-DATA->*.
+  ENDLOOP.
+
+
+  CALL FUNCTION 'ZFM_ALV_DISPLAY'
+    EXPORTING
+      I_CALLBACK_PROGRAM      = SY-REPID
+      I_CALLBACK_USER_COMMAND = 'XML_BUTTON'
+      I_STRUCTURE_NAME        = 'ZST_BM_DATA_XML'
+      I_GRID_TITLE            = TEXT-001
+    TABLES
+      T_OUTTAB                = GT_XML_DATA.
+
+  IF I_UPDATE_DB IS NOT INITIAL.
+    LOOP AT GT_XML_DATA INTO LS_TAB_DATA.
+      CREATE DATA LS_TAB_RAW-DATA TYPE TABLE OF (LS_TAB_DATA-TABNM).
+
+      CALL TRANSFORMATION ID
+        SOURCE XML LS_TAB_DATA-XMLSTR
+        RESULT DATA = LS_TAB_RAW-DATA->*.
+
+      MODIFY (LS_TAB_DATA-TABNM) FROM TABLE @LS_TAB_RAW-DATA->*.
+    ENDLOOP.
+  ENDIF.
+
+ENDFUNCTION.
+
+*&---------------------------------------------------------------------*
+*&      Form  XML_BUTTON
+*&---------------------------------------------------------------------*
+*       Show top HTML of ALV
+*----------------------------------------------------------------------*
+*      -->LPS_DYNDOC_ID  Document ID
+*----------------------------------------------------------------------*
+FORM XML_BUTTON
+    USING R_UCOMM     TYPE SY-UCOMM
+          RS_SELFIELD TYPE SLIS_SELFIELD.
+  DATA:
+    LR_DATA TYPE REF TO DATA.
+  FIELD-SYMBOLS:
+    <LFT_DATA> TYPE STANDARD TABLE.
+
+  IF R_UCOMM = '&IC1'.
+    READ TABLE GT_XML_DATA INTO DATA(LS_XML_DATA) INDEX RS_SELFIELD-TABINDEX.
+    IF SY-SUBRC IS INITIAL.
+*      CL_DEMO_OUTPUT=>DISPLAY_XML( LS_XML_DATA-XMLSTR ).
+
+      CREATE DATA LR_DATA TYPE TABLE OF (LS_XML_DATA-TABNM).
+
+      CALL TRANSFORMATION ID
+        SOURCE XML LS_XML_DATA-XMLSTR
+        RESULT DATA = LR_DATA->*.
+
+      ASSIGN LR_DATA->* TO <LFT_DATA>.
+      CALL FUNCTION 'ZFM_ALV_DISPLAY'
+        EXPORTING
+          I_STRUCTURE_NAME        = LS_XML_DATA-TABNM
+          I_CALLBACK_USER_COMMAND = 'XML_BUTTON'
+          I_CALLBACK_PROGRAM      = SY-REPID
+        TABLES
+          T_OUTTAB                = <LFT_DATA>.
+    ENDIF.
+  ENDIF.
+ENDFORM.

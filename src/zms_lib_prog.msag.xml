@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZMS_LIB_PROG</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Message class for Package Prog lib</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>No data to output</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Trường &quot;&amp;1&quot; bắt buộc nhập</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Giá trị &apos;&amp;2&apos; của trường &apos;&amp;1&apos; không hợp lệ</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Save template error</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Không tạo được file do NSD đang sửa 1 Cell trong 1 file Excel khác</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Export data using DOI error</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Export excel error</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>&amp;1 must be &amp;2 today</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>No config for Program &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>No field store [Sheet name] in sheet data</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Xuất file thành công!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Check config field name in condition: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Variant &amp;1 is not exists in program &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Form name &amp;1 was not exists!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_LIB_PROG</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Please input at least one parameter</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

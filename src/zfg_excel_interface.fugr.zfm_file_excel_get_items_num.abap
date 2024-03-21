@@ -1,0 +1,179 @@
+FUNCTION ZFM_FILE_EXCEL_GET_ITEMS_NUM.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_REPORT) TYPE  PROGRAMM DEFAULT SY-CPROG
+*"     REFERENCE(I_DATA)
+*"     REFERENCE(T_EXCEL_LAYOUT) TYPE  ZTT_EXCEL_LAYOUT OPTIONAL
+*"  EXPORTING
+*"     REFERENCE(T_EXCEL_EXP) TYPE  ZTT_EXCEL_EXP
+*"--------------------------------------------------------------------
+DATA:
+        LT_EXCEL_ITM    TYPE TABLE OF ZTB_EXCEL_LAYOUT,
+        LS_EXCEL_ITM    TYPE ZTB_EXCEL_LAYOUT,
+        LS_EXCEL_ITM2   TYPE ZTB_EXCEL_LAYOUT,
+        LS_EXCEL_EXP    TYPE ZST_EXCEL_EXP,
+        LT_FIELDCAT     TYPE TABLE OF LVC_S_FCAT,
+        LW_TABTYPENAME  TYPE DDOBJNAME,
+        LS_DD40V        TYPE DD40V,
+        LW_ROWS_PRC     TYPE I,
+        LW_ITEMROWS     TYPE I,
+        LW_ITEMCOLS     TYPE I,
+        LW_ROWS_INS     TYPE I,
+        LW_COLS_INS     TYPE I,
+        LR_DATA         TYPE REF TO DATA.
+  FIELD-SYMBOLS:
+    <LF_FCAT>           TYPE LVC_S_FCAT,
+    <LF_DATA>           TYPE ANY,
+    <LF_REF_DATA>       TYPE REF TO DATA,
+    <LFT_ITEMS>         TYPE STANDARD TABLE,
+    <LFT_ITEMS_ALL>     TYPE STANDARD TABLE,
+    <LFT_ITEMS_PACK>    TYPE STANDARD TABLE,
+    <LFT_ITEMS2>        TYPE ANY TABLE.
+
+* Get excel layout
+  LT_EXCEL_ITM = T_EXCEL_LAYOUT.
+  IF LT_EXCEL_ITM IS INITIAL.
+    SELECT *
+      INTO TABLE LT_EXCEL_ITM
+      FROM ZTB_EXCEL_LAYOUT
+     WHERE REPORT  = I_REPORT
+       AND IS_ITEM = 'X'.
+  ENDIF.
+  DELETE LT_EXCEL_ITM WHERE IS_ITEM <> 'X'.
+
+  SORT LT_EXCEL_ITM BY REPORT ROW_POS.
+  LOOP AT LT_EXCEL_ITM INTO LS_EXCEL_ITM.
+    CLEAR: LT_FIELDCAT[], LS_EXCEL_EXP.
+    IF LS_EXCEL_ITM-ISREF IS INITIAL.
+      ASSIGN COMPONENT LS_EXCEL_ITM-FNAME OF STRUCTURE I_DATA
+        TO <LFT_ITEMS>.
+    ELSE.
+      ASSIGN COMPONENT LS_EXCEL_ITM-FNAME OF STRUCTURE I_DATA
+        TO <LF_REF_DATA>.
+
+      ASSIGN <LF_REF_DATA>->* TO <LFT_ITEMS>.
+    ENDIF.
+    CHECK <LFT_ITEMS>[] IS NOT INITIAL.
+
+*   Get structure of line item
+    DESCRIBE FIELD <LFT_ITEMS> HELP-ID LW_TABTYPENAME.
+    CALL FUNCTION 'DDIF_TTYP_GET'
+      EXPORTING
+        NAME     = LW_TABTYPENAME
+      IMPORTING
+        DD40V_WA = LS_DD40V
+      EXCEPTIONS
+        OTHERS   = 2.
+
+    CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+      EXPORTING
+        I_STRUCTURE_NAME   = LS_DD40V-ROWTYPE
+        I_INTERNAL_TABNAME = LS_DD40V-ROWTYPE
+      CHANGING
+        CT_FIELDCAT        = LT_FIELDCAT
+      EXCEPTIONS
+        OTHERS             = 3.
+    IF LS_EXCEL_ITM-INSERT_COL IS INITIAL.
+      LOOP AT LT_FIELDCAT ASSIGNING <LF_FCAT>
+        WHERE COL_POS > LS_EXCEL_ITM-INITCOLS .
+        <LF_FCAT>-NO_OUT = 'X'.
+      ENDLOOP.
+    ELSE.
+      LOOP AT LT_FIELDCAT ASSIGNING <LF_FCAT>
+        WHERE COL_POS > LS_EXCEL_ITM-NCOLS .
+        <LF_FCAT>-NO_OUT = 'X'.
+      ENDLOOP.
+    ENDIF.
+
+*--------------------------------------------------------------------*
+*   Change row position - start
+*--------------------------------------------------------------------*
+    LW_ROWS_INS = LW_COLS_INS = 0.
+    LOOP AT LT_EXCEL_ITM INTO LS_EXCEL_ITM2.
+*     Set row
+      IF LS_EXCEL_ITM-ROW_POS > LS_EXCEL_ITM2-ROW_POS
+      AND LS_EXCEL_ITM2-INSERT_ROW = 'X'.
+        ASSIGN COMPONENT LS_EXCEL_ITM2-FNAME OF STRUCTURE I_DATA
+          TO <LFT_ITEMS2>.
+        DESCRIBE TABLE <LFT_ITEMS2> LINES LW_ITEMROWS.
+        IF LW_ITEMROWS > LS_EXCEL_ITM2-INITROWS.
+          LW_ROWS_INS  = LW_ROWS_INS + LW_ITEMROWS
+                       - LS_EXCEL_ITM2-INITROWS.
+        ENDIF.
+      ENDIF.
+
+*     Set column
+      IF LS_EXCEL_ITM-COL_POS > LS_EXCEL_ITM2-COL_POS
+      AND LS_EXCEL_ITM2-INSERT_COL = 'X'.
+        LW_ITEMCOLS = LS_EXCEL_ITM-INITCOLS.
+        IF LW_ITEMCOLS > LS_EXCEL_ITM2-INITCOLS.
+          LW_COLS_INS = LW_COLS_INS + LW_ITEMCOLS
+                      - LS_EXCEL_ITM2-INITCOLS.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
+    LS_EXCEL_ITM-ROW_POS  = LS_EXCEL_ITM-ROW_POS + LW_ROWS_INS.
+    LS_EXCEL_ITM-COL_POS = LS_EXCEL_ITM-COL_POS + LW_COLS_INS.
+*--------------------------------------------------------------------*
+*   Change row position - End
+*--------------------------------------------------------------------*
+
+**********************************************************************
+* Change 10000 rows
+**********************************************************************
+    DESCRIBE TABLE <LFT_ITEMS> LINES LW_ITEMROWS.
+    CREATE DATA LR_DATA LIKE <LFT_ITEMS>.
+    ASSIGN LR_DATA->* TO <LFT_ITEMS_ALL>.
+    CREATE DATA LR_DATA LIKE <LFT_ITEMS>.
+    ASSIGN LR_DATA->* TO <LFT_ITEMS_PACK>.
+    <LFT_ITEMS_ALL> = <LFT_ITEMS>.
+
+    WHILE LW_ITEMROWS > 0.
+      CLEAR: LS_EXCEL_EXP, <LFT_ITEMS_PACK>[].
+      IF LW_ITEMROWS > GC_TRANSFER_LINES.
+        LW_ROWS_PRC = GC_TRANSFER_LINES.
+      ELSE.
+        LW_ROWS_PRC = LW_ITEMROWS.
+      ENDIF.
+      LW_ITEMROWS = LW_ITEMROWS - LW_ROWS_PRC.
+      APPEND LINES OF <LFT_ITEMS_ALL> FROM 1 TO LW_ROWS_PRC
+        TO <LFT_ITEMS_PACK>.
+      DELETE <LFT_ITEMS_ALL> FROM 1 TO LW_ROWS_PRC.
+*     Them 1 dong init cho pack sau
+      IF <LFT_ITEMS_ALL>[] IS NOT INITIAL.
+        APPEND INITIAL LINE TO <LFT_ITEMS_PACK>.
+      ENDIF.
+
+      CALL FUNCTION 'ZFM_FILE_EXCEL_TABLE_CONV_NUM'
+        EXPORTING
+          I_START_ROW = LS_EXCEL_ITM-ROW_POS
+          I_START_COL = LS_EXCEL_ITM-COL_POS
+          I_GET_BOLD  = LS_EXCEL_ITM-GBOLD
+        TABLES
+          T_OUTTAB    = <LFT_ITEMS_PACK>
+          T_FIELDCAT  = LT_FIELDCAT
+          T_EXCEL     = LS_EXCEL_EXP-EXDATN
+          T_BOLD_ROWS = LS_EXCEL_EXP-BLDRW.
+
+      LS_EXCEL_EXP-ROW_POS  = LS_EXCEL_ITM-ROW_POS.
+      LS_EXCEL_EXP-COL_POS  = LS_EXCEL_ITM-COL_POS.
+      LS_EXCEL_EXP-INSRW    = LS_EXCEL_ITM-INSERT_ROW.
+      LS_EXCEL_EXP-INSCL    = LS_EXCEL_ITM-INSERT_COL.
+      LS_EXCEL_EXP-INITROWS = LS_EXCEL_ITM-INITROWS.
+      LS_EXCEL_EXP-INITCOLS = LS_EXCEL_ITM-INITCOLS.
+      LS_EXCEL_EXP-EXHDR    = LS_EXCEL_ITM-EXHDR.
+      LS_EXCEL_EXP-EXHCL    = LS_EXCEL_ITM-EXHDR.
+
+      LS_EXCEL_ITM-ROW_POS = LS_EXCEL_ITM-ROW_POS + LW_ROWS_PRC.
+*     Set lai init rows cho pack sau
+      LS_EXCEL_ITM-INITROWS = 1.
+      APPEND LS_EXCEL_EXP TO T_EXCEL_EXP.
+    ENDWHILE.
+  ENDLOOP.
+
+
+
+
+
+ENDFUNCTION.

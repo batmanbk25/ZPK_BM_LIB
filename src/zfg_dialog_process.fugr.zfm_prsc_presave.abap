@@ -1,0 +1,78 @@
+FUNCTION ZFM_PRSC_PRESAVE.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_REPID) TYPE  REPID DEFAULT SY-CPROG
+*"--------------------------------------------------------------------
+DATA:
+    LS_PROG_PRSV    TYPE ZTB_PROG_PRSV,
+    LW_FIELDADR     TYPE CHAR100,
+    LR_DATA         TYPE REF TO DATA,
+    LT_FCAT         TYPE LVC_T_FCAT.
+  FIELD-SYMBOLS:
+    <LF_VARSTR>     TYPE ANY,
+    <LF_TEMPSTR>    TYPE ANY,
+    <LF_VARTAB>     TYPE ANY TABLE,
+    <LF_TEMPTAB>    TYPE ANY TABLE.
+
+  IF GT_PROG_PRSV IS INITIAL.
+    SELECT *
+      FROM ZTB_PROG_PRSV
+      INTO TABLE GT_PROG_PRSV
+     WHERE REPID = I_REPID.
+
+    SELECT *
+      FROM ZTB_PROG_PRSF
+      INTO TABLE GT_PROG_PRSF
+     WHERE REPID = I_REPID.
+  ENDIF.
+
+  LOOP AT GT_PROG_PRSV INTO LS_PROG_PRSV.
+    CONCATENATE '(' I_REPID ')' LS_PROG_PRSV-VARNAME
+           INTO LW_FIELDADR.
+
+    IF LS_PROG_PRSV-INTTAB IS INITIAL.
+      ASSIGN (LW_FIELDADR) TO <LF_VARSTR>.
+      CALL FUNCTION 'ZFM_PRSC_PRESAVE_SETVL'
+        EXPORTING
+          I_PROG_PRSV       = LS_PROG_PRSV
+        CHANGING
+          C_DATA            = <LF_VARSTR>.
+    ELSE.
+      ASSIGN (LW_FIELDADR) TO <LF_VARTAB>.
+      CREATE DATA LR_DATA LIKE LINE OF <LF_VARTAB>.
+      ASSIGN LR_DATA->* TO <LF_VARSTR>.
+      CALL FUNCTION 'ZFM_PRSC_PRESAVE_SETVL'
+        EXPORTING
+          I_PROG_PRSV       = LS_PROG_PRSV
+        IMPORTING
+          T_FCAT            = LT_FCAT
+        CHANGING
+          C_DATA            = <LF_VARSTR>.
+
+      CALL METHOD CL_ALV_TABLE_CREATE=>CREATE_DYNAMIC_TABLE
+        EXPORTING
+          IT_FIELDCATALOG           = LT_FCAT
+        IMPORTING
+          EP_TABLE                  = LR_DATA
+        EXCEPTIONS
+          GENERATE_SUBPOOL_DIR_FULL = 1
+          OTHERS                    = 2.
+
+      ASSIGN LR_DATA->* TO <LF_TEMPTAB>.
+      CREATE DATA LR_DATA LIKE LINE OF <LF_TEMPTAB>.
+      ASSIGN LR_DATA->* TO <LF_TEMPSTR>.
+      MOVE-CORRESPONDING <LF_VARSTR> TO <LF_TEMPSTR>.
+
+      LOOP AT <LF_VARTAB> ASSIGNING <LF_VARSTR>.
+        MOVE-CORRESPONDING <LF_TEMPSTR> TO <LF_VARSTR>.
+      ENDLOOP.
+    ENDIF.
+
+  ENDLOOP.
+
+
+
+
+
+ENDFUNCTION.

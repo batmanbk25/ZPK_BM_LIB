@@ -1,0 +1,160 @@
+FUNCTION ZFM_OLE_EXCEL_CELLS_EXPORT.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_EXCEL) TYPE  OLE2_OBJECT OPTIONAL
+*"     REFERENCE(T_EXCEL_LAYOUT) TYPE  ZTT_EXCEL_LAYOUT
+*"     REFERENCE(I_DATA)
+*"  TABLES
+*"      T_EXCEL_DATA TYPE  SOI_GENERIC_TABLE OPTIONAL
+*"--------------------------------------------------------------------
+DATA:
+    LW_RC             TYPE I,
+    LS_EXCEL_LAYOUT   TYPE ZTB_EXCEL_LAYOUT,
+    LS_EXCEL          TYPE OLE2_OBJECT,
+    LS_ACTIVESHEET    TYPE OLE2_OBJECT,
+    LS_RANGE          TYPE OLE2_OBJECT,
+    LW_ROW            TYPE I,
+    LW_COL            TYPE I,
+    LS_CELL1          TYPE OLE2_OBJECT,
+    LS_CELL2          TYPE OLE2_OBJECT,
+    LS_DATA           TYPE REF TO DATA,
+    LS_EXCEL_COLDAT   TYPE ZST_EXCEL_COLDAT,
+    LW_INDEX          TYPE I,
+    LW_CELLDAT        TYPE ZST_EXCEL-VALUE,
+    LT_CELLDAT        TYPE TABLE OF ZST_EXCEL-VALUE,
+    LW_LINEDAT        TYPE ZST_EX_COLDAT-VALUE,
+    LW_LOCK           TYPE XMARK.
+  FIELD-SYMBOLS:
+    <LF_EXCEL_COLDAT> TYPE ZST_EXCEL_COLDAT,
+    <LF_DATA>         TYPE ANY,
+    <LF_DATFLD>       TYPE ANY,
+    <LF_DATTAB>       TYPE TABLE.
+
+* Choose excel application
+  IF I_EXCEL IS INITIAL.
+    LS_EXCEL = GS_OLE_EXCEL.
+  ELSE.
+    LS_EXCEL = I_EXCEL.
+  ENDIF.
+
+  CREATE DATA LS_DATA LIKE I_DATA.
+  ASSIGN LS_DATA->* TO <LF_DATA>.
+  <LF_DATA> = I_DATA.
+
+  LOOP AT T_EXCEL_LAYOUT  INTO LS_EXCEL_LAYOUT.
+    IF LS_EXCEL_LAYOUT-IS_ITEM IS INITIAL.
+      ASSIGN COMPONENT LS_EXCEL_LAYOUT-FNAME OF STRUCTURE <LF_DATA>
+        TO <LF_DATFLD>.
+      CHECK SY-SUBRC IS INITIAL.
+*      ASSIGN
+      CREATE DATA LS_DATA LIKE TABLE OF <LF_DATFLD>.
+      ASSIGN LS_DATA->* TO <LF_DATTAB>.
+      APPEND <LF_DATFLD> TO <LF_DATTAB>.
+      LW_ROW = LS_EXCEL_LAYOUT-ROW_POS.
+      LW_COL = LS_EXCEL_LAYOUT-COL_POS.
+
+*     Select first cell
+      CALL METHOD OF LS_EXCEL 'Cells' = LS_CELL1
+        EXPORTING
+          #1 = LS_EXCEL_LAYOUT-ROW_POS
+          #2 = LS_EXCEL_LAYOUT-COL_POS.
+
+*     Select last cell
+      CALL METHOD OF LS_EXCEL 'Cells' = LS_CELL2
+        EXPORTING
+          #1 = LW_ROW
+          #2 = LW_COL.
+
+      CALL METHOD OF LS_EXCEL 'Range' = LS_RANGE
+        EXPORTING
+        #1 = LS_CELL1
+        #2 = LS_CELL2.
+
+      CALL METHOD OF LS_RANGE 'Select'.
+      SET PROPERTY OF LS_RANGE 'VALUE' = <LF_DATFLD>.
+    ELSE.
+      ASSIGN COMPONENT LS_EXCEL_LAYOUT-FNAME OF STRUCTURE <LF_DATA>
+        TO <LF_DATTAB>.
+      CHECK SY-SUBRC IS INITIAL.
+*      DESCRIBE TABLE <LF_DATTAB> LINES LW_ROW.
+      LW_ROW = LINES( <LF_DATTAB> ).
+      LW_ROW = LS_EXCEL_LAYOUT-ROW_POS + LW_ROW - 1.
+
+*      DO LS_EXCEL_LAYOUT-NCOLS TIMES.
+*        LW_INDEX = SY-INDEX.
+*        LW_COL = LW_INDEX.
+*        LW_COL = LS_EXCEL_LAYOUT-COL_POS + LW_COL - 1.
+*        CLEAR: LS_EXCEL_COLDAT.
+*        LS_EXCEL_COLDAT-COL_POS = LW_INDEX.
+      LOOP AT <LF_DATTAB> ASSIGNING <LF_DATFLD>.
+        CLEAR: LW_LINEDAT, LT_CELLDAT.
+        DO LS_EXCEL_LAYOUT-NCOLS TIMES.
+          ASSIGN COMPONENT SY-INDEX OF STRUCTURE <LF_DATFLD>
+            TO <LF_DATA>.
+          IF SY-SUBRC IS INITIAL.
+            LW_CELLDAT = <LF_DATA>.
+            CONDENSE LW_CELLDAT.
+            APPEND LW_CELLDAT TO LT_CELLDAT.
+          ENDIF.
+        ENDDO.
+        CONCATENATE LINES OF LT_CELLDAT
+               INTO LW_LINEDAT
+          SEPARATED BY CL_ABAP_CHAR_UTILITIES=>HORIZONTAL_TAB.
+        APPEND LW_LINEDAT TO LS_EXCEL_COLDAT-COLDAT.
+      ENDLOOP.
+
+*     Select first cell
+      CALL METHOD OF LS_EXCEL 'Cells' = LS_CELL1
+        EXPORTING
+          #1 = LS_EXCEL_LAYOUT-ROW_POS
+          #2 = LS_EXCEL_LAYOUT-COL_POS.
+
+      LW_COL = LS_EXCEL_LAYOUT-COL_POS + LS_EXCEL_LAYOUT-NCOLS - 1.
+*     Select last cell
+      CALL METHOD OF LS_EXCEL 'Cells' = LS_CELL2
+        EXPORTING
+          #1 = LW_ROW
+          #2 = LW_COL.
+
+      CALL METHOD OF LS_EXCEL 'Range' = LS_RANGE
+        EXPORTING
+        #1 = LS_CELL1
+        #2 = LS_CELL1.
+*        #2 = LS_CELL2.
+
+      CALL METHOD OF LS_RANGE 'Select'.
+
+      PERFORM 9999_CHECK_LOCK_CLBEX CHANGING LW_LOCK.
+      CHECK LW_LOCK IS NOT INITIAL.
+
+      CALL METHOD CL_GUI_FRONTEND_SERVICES=>CLIPBOARD_EXPORT
+        EXPORTING
+          NO_AUTH_CHECK        = GC_XMARK
+        IMPORTING
+          DATA                 = LS_EXCEL_COLDAT-COLDAT
+        CHANGING
+          RC                   = LW_RC
+        EXCEPTIONS
+          CNTL_ERROR           = 1
+          ERROR_NO_GUI         = 2
+          NOT_SUPPORTED_BY_GUI = 3
+          NO_AUTHORITY         = 4
+          OTHERS               = 5.
+      CHECK SY-SUBRC IS INITIAL.
+
+*     Set cells value
+      CALL METHOD OF LS_EXCEL 'ActiveSheet' = LS_ACTIVESHEET.
+      CALL METHOD OF LS_ACTIVESHEET 'Activate'.
+
+      CALL METHOD OF LS_ACTIVESHEET 'Paste'.
+*      ENDDO.
+    ENDIF.
+
+  ENDLOOP.
+
+
+
+
+
+ENDFUNCTION.

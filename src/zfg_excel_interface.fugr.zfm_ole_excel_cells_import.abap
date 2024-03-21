@@ -1,0 +1,85 @@
+FUNCTION ZFM_OLE_EXCEL_CELLS_IMPORT.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_EXCEL) TYPE  OLE2_OBJECT OPTIONAL
+*"  TABLES
+*"      T_EXCEL_DATA TYPE  SOI_GENERIC_TABLE
+*"--------------------------------------------------------------------
+DATA:
+    LW_ROW        TYPE I,
+    LW_COL        TYPE I,
+    LW_ROW1       TYPE I,
+    LW_COL1       TYPE I,
+    LW_ROW2       TYPE I,
+    LW_COL2       TYPE I,
+    LW_VALUE      TYPE C LENGTH 500,
+    LS_CELL       TYPE OLE2_OBJECT,
+    LS_CELL1      TYPE OLE2_OBJECT,
+    LS_CELL2      TYPE OLE2_OBJECT,
+    LS_RANGE      TYPE OLE2_OBJECT,
+    LS_EXCEL      TYPE OLE2_OBJECT,
+    LS_EXCEL_DATA TYPE SOI_GENERIC_ITEM.
+
+* Choose excel application
+  IF I_EXCEL IS INITIAL.
+    LS_EXCEL = GS_OLE_EXCEL.
+  ELSE.
+    LS_EXCEL = I_EXCEL.
+  ENDIF.
+* Set cells value
+  LOOP AT T_EXCEL_DATA INTO LS_EXCEL_DATA.
+    LW_ROW = LS_EXCEL_DATA-ROW.
+    LW_COL = LS_EXCEL_DATA-COLUMN.
+
+    IF LW_ROW1 = 0 OR LW_ROW1 > LW_ROW.
+      LW_ROW1 = LW_ROW.
+    ENDIF.
+
+    IF LW_COL1 = 0 OR LW_COL1 > LW_COL.
+      LW_COL1 = LW_COL.
+    ENDIF.
+
+    IF LW_ROW2 = 0 OR LW_ROW2 < LW_ROW.
+      LW_ROW2 = LW_ROW.
+    ENDIF.
+
+    IF LW_COL2 = 0 OR LW_COL2 < LW_COL.
+      LW_COL2 = LW_COL.
+    ENDIF.
+
+    CALL METHOD OF LS_EXCEL 'Cells' = LS_CELL
+      EXPORTING
+      #1 = LW_ROW
+      #2 = LW_COL.
+    GET PROPERTY OF LS_CELL 'VALUE' = LW_VALUE.
+    LW_ROW = STRLEN( LW_VALUE ).
+    WRITE: / LW_VALUE, / LW_VALUE+256, LW_ROW.
+    LS_EXCEL_DATA-VALUE = LW_VALUE.
+*    WRITE: / LS_EXCEL_DATA-VALUE.
+    FREE OBJECT LS_CELL.
+  ENDLOOP.
+
+
+  CALL METHOD OF LS_EXCEL 'Cells' = LS_CELL1
+    EXPORTING
+    #1 = LW_ROW1
+    #2 = LW_COL1.
+
+  CALL METHOD OF LS_EXCEL 'Cells' = LS_CELL2
+    EXPORTING
+    #1 = LW_ROW2
+    #2 = LW_COL2.
+
+  CALL METHOD OF LS_EXCEL 'RANGE' = LS_RANGE
+    EXPORTING
+    #1 = LS_CELL1
+    #2 = LS_CELL2.
+
+  GET PROPERTY OF LS_RANGE 'VALUE' = T_EXCEL_DATA.
+
+
+
+
+
+ENDFUNCTION.

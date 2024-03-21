@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZMS_COL_LIB</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Message for lib of collection</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>No data to output</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Trường &quot;&amp;1&quot; bắt buộc nhập</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Giá trị &apos;&amp;2&apos; của trường &apos;&amp;1&apos; không hợp lệ</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>&amp;1 phải &amp;2 ngày hiện tại</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Tổng số bản ghi: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Số bản ghi đã chọn/số lượng lọc/tổng số: &amp;1/&amp;2/&amp;3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Không tồn tại file &quot;&amp;1&quot;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Không tồn tại bảng &quot;&amp;1&quot;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Read original data error</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Save successful</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Tạm thời khóa RFC</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Save table &amp;1 unsuccessful</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Trường &amp;1 của dòng &amp;1 chưa nhập</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Actor &amp;1 in expression &amp;2 is not correct</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Refresh time &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Please choose only one row</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Choose descendant at one child level</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>File dialog error!</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Please choose at least one row</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>No data to save</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Trường &amp;1-&apos;&amp;2&apos; có độ dài lớn hơn &amp;3 ký tự</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Trường &amp;1, giá trị &apos;&amp;2&apos; không đúng định dạng &amp;3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Trường &amp;1, giá trị &apos;&amp;2&apos; không tồn tại trong danh mục</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Dữ liệu nhóm &amp;1 không đồng nhất</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Hiệu lực từ lớn hơn hiệu lực đến</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Hiệu lực trùng với khoảng thời gian &amp;1-&amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Thông tin phường/xã không thuộc quận/huyện</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Thông tin quận/huyện không thuộc tỉnh/thành phố</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Chức năng này chỉ dành cho loại dữ liệu bảng, FSV và văn bản</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Chức năng này chỉ dành cho loại dữ liệu bảng (table) và FSV</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_COL_LIB</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Table has reached max number columns (10)</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

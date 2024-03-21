@@ -1,0 +1,31 @@
+FUNCTION ZFM_SUBMIT_SELOPT_TO_PARAMS.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_SELNAME) TYPE  RSSCR_NAME
+*"     REFERENCE(IR_SELOPT) TYPE  TABLE
+*"  EXPORTING
+*"     REFERENCE(ET_PARAMS) TYPE  RSPARAMS_TT
+*"--------------------------------------------------------------------
+DATA:
+    LS_RSPARAM  TYPE RSPARAMS,
+    LR_DATA   TYPE REF TO DATA.
+  FIELD-SYMBOLS:
+    <LF_DATA>  TYPE ANY.
+
+  CREATE DATA LR_DATA LIKE LINE OF IR_SELOPT.
+  ASSIGN LR_DATA->* TO <LF_DATA>.
+
+  LOOP AT IR_SELOPT INTO <LF_DATA>.
+    CLEAR: LS_RSPARAM.
+    LS_RSPARAM-SELNAME  = I_SELNAME.
+    LS_RSPARAM-KIND     = 'S'.
+    MOVE-CORRESPONDING <LF_DATA> TO LS_RSPARAM.
+    APPEND LS_RSPARAM TO ET_PARAMS.
+  ENDLOOP.
+
+
+
+
+
+ENDFUNCTION.

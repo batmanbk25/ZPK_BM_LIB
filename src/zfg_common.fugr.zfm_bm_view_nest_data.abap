@@ -1,0 +1,44 @@
+FUNCTION ZFM_BM_VIEW_NEST_DATA.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_DATA) TYPE REF TO DATA
+*"     REFERENCE(I_NODENAME) DEFAULT 'ROOT'
+*"     VALUE(I_TYPENAME) TYPE  TYPENAME OPTIONAL
+*"     REFERENCE(I_HIDENULL) TYPE  XMARK DEFAULT 'X'
+*"  EXPORTING
+*"     REFERENCE(ET_DATA_VIEW) TYPE  ZTT_BM_DATA_VIEW
+*"  EXCEPTIONS
+*"      INVALID_TYPE
+*"--------------------------------------------------------------------
+DATA:
+    LS_DATA_VIEW              TYPE ZST_BM_DATA_VIEW.
+
+* Initial
+  CLEAR: GT_DATA_VIEW.
+* Init data type
+  IF I_TYPENAME IS INITIAL.
+    DESCRIBE FIELD I_DATA HELP-ID I_TYPENAME.
+  ENDIF.
+
+* Add root node
+  PERFORM 9999_DATA_ADD_NODE
+    USING I_NODENAME
+          I_TYPENAME
+          LS_DATA_VIEW.
+
+  CREATE OBJECT GO_NEST_HANDLE
+    EXPORTING
+      NODES     = GT_DATA_VIEW
+      ROOT_DATA = I_DATA.
+
+* Show structure view
+  PERFORM 9999_SHOW_STRUCTURE_TREE.
+
+  ET_DATA_VIEW = GT_DATA_VIEW.
+
+
+
+
+
+ENDFUNCTION.

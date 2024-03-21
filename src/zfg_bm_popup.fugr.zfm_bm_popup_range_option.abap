@@ -1,0 +1,69 @@
+FUNCTION ZFM_BM_POPUP_RANGE_OPTION.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  CHANGING
+*"     REFERENCE(C_SIGN) TYPE  SE16N_SIGN
+*"     REFERENCE(C_OPTION) TYPE  SE16N_OPTION
+*"     REFERENCE(C_ICON) TYPE  SE16N_ICON OPTIONAL
+*"     REFERENCE(C_HIGH) OPTIONAL
+*"----------------------------------------------------------------------
+
+  DATA:
+    LT_FIELDCAT TYPE LVC_T_FCAT,
+    LS_SELFIELD TYPE SLIS_SELFIELD,
+    LW_EXIT     TYPE XMARK,
+    LT_OPTIONS  TYPE TABLE OF SE16N_SEL_OPTION..
+
+  PERFORM 9999_GEN_OPTION_LIST TABLES LT_OPTIONS.
+
+  CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+    EXPORTING
+      I_STRUCTURE_NAME       = 'SE16N_SEL_OPTION'
+    CHANGING
+      CT_FIELDCAT            = LT_FIELDCAT
+    EXCEPTIONS
+      INCONSISTENT_INTERFACE = 1
+      PROGRAM_ERROR          = 2
+      OTHERS                 = 3.
+
+  LOOP AT LT_FIELDCAT ASSIGNING FIELD-SYMBOL(<LF_FIELDCAT>).
+    CASE <LF_FIELDCAT>-FIELDNAME.
+      WHEN 'SIGN'.
+        <LF_FIELDCAT>-NO_OUT = 'X'.
+      WHEN 'OPTION'.
+        <LF_FIELDCAT>-NO_OUT = 'X'.
+      WHEN 'ICON'.
+        <LF_FIELDCAT>-OUTPUTLEN = 2.
+    ENDCASE.
+  ENDLOOP.
+
+*.Show popup with the options and give one back
+  CALL FUNCTION 'LVC_SINGLE_ITEM_SELECTION'
+    EXPORTING
+      I_TITLE         = TEXT-OPT
+      IT_FIELDCATALOG = LT_FIELDCAT
+    IMPORTING
+      ES_SELFIELD     = LS_SELFIELD
+      E_EXIT          = LW_EXIT
+    TABLES
+      T_OUTTAB        = LT_OPTIONS.
+
+  IF LW_EXIT <> 'X'.
+    READ TABLE LT_OPTIONS INTO DATA(LS_OPTION)
+             INDEX LS_SELFIELD-TABINDEX.
+    IF SY-SUBRC = 0.
+      C_SIGN   = LS_OPTION-SIGN.
+      C_OPTION = LS_OPTION-OPTION.
+      C_ICON   = LS_OPTION-ICON.
+*     Check low and/or high are allowed for the selected option
+      READ TABLE GT_SEL_INIT WITH KEY OPTION = LS_OPTION-OPTION.
+      IF SY-SUBRC = 0.
+        IF GT_SEL_INIT-HIGH <> 'X'.
+          CLEAR C_HIGH.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+  ENDIF.
+  "'SE16N_MULTI_FIELD_INPUT'.
+
+ENDFUNCTION.

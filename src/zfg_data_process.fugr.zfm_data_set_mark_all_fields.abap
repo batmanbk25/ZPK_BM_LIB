@@ -1,0 +1,52 @@
+FUNCTION ZFM_DATA_SET_MARK_ALL_FIELDS.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  CHANGING
+*"     REFERENCE(C_DATA) TYPE  ANY
+*"--------------------------------------------------------------------
+DATA:
+    LT_FIELDCAT     TYPE LVC_T_FCAT,
+    LS_FIELDCAT     TYPE LVC_S_FCAT,
+    LW_TYPE         TYPE C,
+    LW_COMPS        TYPE I,
+    LW_INDEX        TYPE I.
+  FIELD-SYMBOLS:
+    <LF_FIELD_VALUE>  TYPE ANY.
+
+  DESCRIBE FIELD C_DATA TYPE LW_TYPE COMPONENTS LW_COMPS.
+  DO LW_COMPS TIMES.
+    ASSIGN COMPONENT SY-INDEX OF STRUCTURE C_DATA TO <LF_FIELD_VALUE>.
+    IF SY-SUBRC IS INITIAL.
+      <LF_FIELD_VALUE> = GC_XMARK.
+    ENDIF.
+  ENDDO.
+
+*  IF I_STRUCTURE IS INITIAL.
+*    RAISE NO_STRUCTURE.
+*  ENDIF.
+*
+** Get table name and field category
+*  CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+*    EXPORTING
+*      I_STRUCTURE_NAME       = I_STRUCTURE
+*      I_INTERNAL_TABNAME     = I_STRUCTURE
+*    CHANGING
+*      CT_FIELDCAT            = LT_FIELDCAT
+*    EXCEPTIONS
+*      INCONSISTENT_INTERFACE = 1
+*      PROGRAM_ERROR          = 2
+*      OTHERS                 = 3.
+*
+*  LOOP AT LT_FIELDCAT INTO LS_FIELDCAT.
+*    ASSIGN COMPONENT LS_FIELDCAT-FIELDNAME OF STRUCTURE C_DATA
+*      TO <LF_FIELD_VALUE>.
+*    IF SY-SUBRC IS INITIAL.
+*      <LF_FIELD_VALUE> = GC_XMARK.
+*    ENDIF.
+*  ENDLOOP.
+
+
+
+
+
+ENDFUNCTION.

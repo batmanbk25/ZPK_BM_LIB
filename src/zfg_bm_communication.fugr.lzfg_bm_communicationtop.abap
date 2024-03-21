@@ -1,0 +1,3 @@
+FUNCTION-POOL ZFG_BM_COMMUNICATION.         "MESSAGE-ID ..
+
+* INCLUDE LZFG_BM_COMMUNICATIOND...          " Local class definition

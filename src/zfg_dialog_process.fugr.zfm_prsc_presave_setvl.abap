@@ -1,0 +1,66 @@
+FUNCTION ZFM_PRSC_PRESAVE_SETVL.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_PROG_PRSV) TYPE  ZTB_PROG_PRSV
+*"  EXPORTING
+*"     REFERENCE(T_FCAT) TYPE  LVC_T_FCAT
+*"  CHANGING
+*"     REFERENCE(C_DATA) TYPE  ANY
+*"--------------------------------------------------------------------
+DATA:
+    LW_FIELDADR     TYPE CHAR100,
+    LS_PROG_PRSF    TYPE ZTB_PROG_PRSF,
+    LT_FCAT         TYPE LVC_T_FCAT,
+    LS_FCAT         TYPE LVC_S_FCAT.
+  FIELD-SYMBOLS:
+    <LF_FIELD>      TYPE ANY,
+    <LF_VALUE>      TYPE ANY.
+
+  IF T_FCAT IS REQUESTED.
+    CLEAR: T_FCAT[].
+
+    CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+      EXPORTING
+        I_STRUCTURE_NAME             = I_PROG_PRSV-STRNAME
+        I_INTERNAL_TABNAME           = I_PROG_PRSV-STRNAME
+      CHANGING
+        CT_FIELDCAT                  = LT_FCAT
+      EXCEPTIONS
+        INCONSISTENT_INTERFACE       = 1
+        PROGRAM_ERROR                = 2
+        OTHERS                       = 3.
+  ENDIF.
+
+  LOOP AT GT_PROG_PRSF INTO LS_PROG_PRSF
+    WHERE REPID   = I_PROG_PRSV-REPID
+      AND VARNAME = I_PROG_PRSV-VARNAME.
+    ASSIGN COMPONENT LS_PROG_PRSF-FIELDNAME OF STRUCTURE C_DATA
+      TO <LF_FIELD>.
+    IF SY-SUBRC IS INITIAL.
+      IF LS_PROG_PRSF-FIELDVAL(1) = ''''.
+        <LF_FIELD> = LS_PROG_PRSF-FIELDVAL+1.
+      ELSE.
+        CONCATENATE '(' I_PROG_PRSV-REPID ')' LS_PROG_PRSF-FIELDVAL
+               INTO LW_FIELDADR.
+        ASSIGN (LW_FIELDADR) TO <LF_VALUE>.
+        IF SY-SUBRC IS INITIAL.
+          <LF_FIELD> = <LF_VALUE>.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+    IF T_FCAT IS REQUESTED.
+      READ TABLE LT_FCAT INTO LS_FCAT
+        WITH KEY FIELDNAME = LS_PROG_PRSF-FIELDNAME.
+      IF SY-SUBRC IS INITIAL.
+        APPEND LS_FCAT TO T_FCAT.
+      ENDIF.
+    ENDIF.
+  ENDLOOP.
+
+
+
+
+
+ENDFUNCTION.

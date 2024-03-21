@@ -1,0 +1,101 @@
+FUNCTION ZFM_FILE_EXCEL_CONV_MAPPING.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(T_SHEET_MAPPING) TYPE  ANY TABLE
+*"     REFERENCE(I_SHEETFIELD) TYPE  FIELDNAME DEFAULT 'SHEETNAME'
+*"  EXPORTING
+*"     REFERENCE(T_EXCEL_MAPPING) TYPE  ZTT_EXCEL_MAPPING
+*"  EXCEPTIONS
+*"      NO_MAPPING
+*"      NO_SHEETNAME
+*"--------------------------------------------------------------------
+CONSTANTS:
+    LC_SHEETNAME        TYPE FIELDNAME VALUE 'SHEETNAME'.
+
+  DATA:
+    LW_SHEETFIELD       TYPE FIELDNAME,
+    LS_EXCEL_MAPPING    TYPE ZST_EXCEL_MAPPING,
+    LS_DATA             TYPE REF TO DATA,
+    LW_COL              TYPE I,
+    LW_DATATYPE         TYPE CHAR70,
+    LW_TABNAME          TYPE TABNAME,
+    LW_FIELDNAME        TYPE FIELDNAME.
+
+  FIELD-SYMBOLS:
+    <LF_SHEET_MAPPING>  TYPE ANY,
+    <LF_FIELD>          TYPE ANY.
+
+  CLEAR: T_EXCEL_MAPPING.
+
+  IF I_SHEETFIELD IS INITIAL.
+    LW_SHEETFIELD = LC_SHEETNAME.
+  ELSE.
+    LW_SHEETFIELD = I_SHEETFIELD.
+  ENDIF.
+
+* Check mapping table has data
+  IF T_SHEET_MAPPING[] IS INITIAL.
+    RAISE NO_MAPPING.
+  ENDIF.
+
+* Create record mapping
+  CREATE DATA LS_DATA LIKE LINE OF T_SHEET_MAPPING.
+  ASSIGN LS_DATA->* TO <LF_SHEET_MAPPING>.
+
+* Convert mapping
+  LOOP AT T_SHEET_MAPPING ASSIGNING <LF_SHEET_MAPPING>.
+    CLEAR: LS_EXCEL_MAPPING, LW_COL.
+
+    WHILE 1 = 1.
+      LW_COL = LW_COL + 1.
+      ASSIGN COMPONENT LW_COL OF STRUCTURE <LF_SHEET_MAPPING>
+        TO <LF_FIELD>.
+*     Quit to new sheet mapping if last field
+      IF SY-SUBRC IS NOT INITIAL.
+        EXIT.
+      ENDIF.
+
+*     Quit to next field mapping if column mapping is null
+      IF <LF_FIELD> IS INITIAL.
+        CONTINUE.
+      ENDIF.
+
+*     Get data type
+      DESCRIBE FIELD <LF_FIELD> HELP-ID LW_DATATYPE.
+      SPLIT LW_DATATYPE AT '-' INTO LW_TABNAME LW_FIELDNAME.
+
+*     Create mapping
+      IF  LW_FIELDNAME = LW_SHEETFIELD.
+*       Add sheet name
+        LS_EXCEL_MAPPING-SHEETNAME = <LF_FIELD>.
+      ELSEIF LS_EXCEL_MAPPING-SHEETNAME IS NOT INITIAL.
+*       Add mapping all field after field sheet name
+        LS_EXCEL_MAPPING-FIELDNAME = LW_FIELDNAME.
+        CALL FUNCTION 'ZFM_FILE_EXCEL_COL_CHAR2NUM'
+          EXPORTING
+            I_COL_CHAR          = <LF_FIELD>
+          IMPORTING
+            E_COL_NUM           = LS_EXCEL_MAPPING-COLUMN
+          EXCEPTIONS
+            COLUMN_NAME_INVALID = 1
+            COLUMN_NAME_BLANK   = 2
+            OTHERS              = 3.
+
+*        LS_EXCEL_MAPPING-COLUMN    = <LF_FIELD>.
+
+        APPEND LS_EXCEL_MAPPING TO T_EXCEL_MAPPING.
+      ENDIF.
+    ENDWHILE.
+  ENDLOOP.
+
+  DELETE T_EXCEL_MAPPING WHERE SHEETNAME IS INITIAL.
+  IF T_EXCEL_MAPPING[] IS INITIAL.
+    RAISE NO_SHEETNAME.
+  ENDIF.
+
+
+
+
+
+ENDFUNCTION.

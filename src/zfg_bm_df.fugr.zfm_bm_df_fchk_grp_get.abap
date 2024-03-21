@@ -1,0 +1,26 @@
+FUNCTION ZFM_BM_DF_FCHK_GRP_GET .
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_DF_FIELD) TYPE  ZST_BM_DF_FIELD
+*"     REFERENCE(I_FIELDCODE) TYPE  FIELDNAME
+*"  EXPORTING
+*"     REFERENCE(E_FCODE_VALUE)
+*"     REFERENCE(E_CHKGRP_DAT) TYPE  ZST_BM_DF_CHKGRP_DAT
+*"----------------------------------------------------------------------
+  DATA:
+    LS_DF_CHKGRP_DAT          TYPE ZST_BM_DF_CHKGRP_DAT.
+  FIELD-SYMBOLS:
+    <LF_VALUE>                TYPE ANY.
+
+  READ TABLE GT_DF_CHKGRP_DAT INTO LS_DF_CHKGRP_DAT
+    WITH KEY TABNM  = I_DF_FIELD-TABNM
+             CHKGRP = I_DF_FIELD-CHKGRP
+             FCODE  = I_FIELDCODE.
+  IF SY-SUBRC IS INITIAL.
+    ASSIGN LS_DF_CHKGRP_DAT-VALUE->* TO <LF_VALUE>.
+    E_FCODE_VALUE = <LF_VALUE>.
+    E_CHKGRP_DAT  = LS_DF_CHKGRP_DAT.
+  ENDIF.
+
+ENDFUNCTION.

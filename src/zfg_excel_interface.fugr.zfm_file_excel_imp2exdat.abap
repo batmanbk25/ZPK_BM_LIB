@@ -1,0 +1,57 @@
+FUNCTION ZFM_FILE_EXCEL_IMP2EXDAT.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_LOCALFILE) OPTIONAL
+*"     REFERENCE(I_NEEDOPEN) TYPE  XMARK OPTIONAL
+*"     REFERENCE(I_CONTAINER_NAME) TYPE  SCRFNAME OPTIONAL
+*"     REFERENCE(I_CLOSEFILE) TYPE  XMARK OPTIONAL
+*"  EXPORTING
+*"     REFERENCE(T_EXCEL_IMP) TYPE  ZTT_EXCEL_IMP
+*"  EXCEPTIONS
+*"      OPENFILE_ERROR
+*"      NO_MAPPING
+*"      READ_DATA_ERROR
+*"      MAPPING_ERROR
+*"--------------------------------------------------------------------
+DATA:
+    LT_FILEDATA             TYPE ZTT_EXCEL_IMP,
+    LW_FILENAME             TYPE LOCALFILE.
+
+  IF I_NEEDOPEN IS NOT INITIAL.
+    LW_FILENAME = I_LOCALFILE.
+    CALL FUNCTION 'ZFM_DOI_EXCEL_OPEN'
+      EXPORTING
+        I_FILENAME       = LW_FILENAME
+        I_CONTAINER_NAME = I_CONTAINER_NAME
+        I_READ_ONLY      = 'X'
+      EXCEPTIONS
+        OPEN_FILE_ERR    = 1
+        OPEN_SHEET_ERR   = 2
+        OTHERS           = 3.
+    IF SY-SUBRC <> 0.
+      RAISE OPENFILE_ERROR.
+    ENDIF.
+  ENDIF.
+
+* Get data
+  CLEAR: LT_FILEDATA[].
+  PERFORM GET_EXCEL_FILE_DATA_ALL
+    CHANGING  LT_FILEDATA.
+
+* Close file
+  IF I_CLOSEFILE = 'X'.
+    CALL FUNCTION 'ZFM_DOI_EXCEL_CLOSE'
+      EXPORTING
+        I_FILENAME  = LW_FILENAME
+        I_OPEN_FILE = ''.
+  ENDIF.
+
+* Export data
+  T_EXCEL_IMP[] = LT_FILEDATA[].
+
+
+
+
+
+ENDFUNCTION.

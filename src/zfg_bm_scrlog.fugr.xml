@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Logging user manipulations</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZFG_BM_SCRLOGF01</SOBJ_NAME>
+    <SOBJ_NAME>LZFG_BM_SCRLOGTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZFG_BM_SCRLOG</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFM_SCR_PAI_LOG</FUNCNAME>
+     <SHORT_TEXT>Logging User Maipulations</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_REPID</PARAMETER>
+       <DEFAULT>SY-CPROG</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REPID</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <DEFAULT>SY-DYNNR</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DYNNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_FCODE</PARAMETER>
+       <DEFAULT>SY-UCOMM</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SYUCOMM</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_REPID</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>ABAP Program Name</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Number of the following screen</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_FCODE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Function code that PAI triggered</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,209 @@
+FUNCTION ZFM_SCR_PBO_TAB.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_CPROG) TYPE  CPROG DEFAULT SY-CPROG
+*"     REFERENCE(I_DYNNR) TYPE  DYNNR DEFAULT SY-DYNNR
+*"     REFERENCE(I_CSTEP) TYPE  ZDD_CHECK_STEP OPTIONAL
+*"     VALUE(T_SCR_CHKSTEP) TYPE  ZTT_SCR_CHKSTEP OPTIONAL
+*"     REFERENCE(I_MODE) TYPE  ZDD_SCR_MODE DEFAULT '01'
+*"     VALUE(I_CONFIG_PROG) TYPE  SY-REPID OPTIONAL
+*"     VALUE(I_CLEAR_INACTIVE) TYPE  XMARK OPTIONAL
+*"     REFERENCE(I_SET_LIST_VALUES) TYPE  XMARK OPTIONAL
+*"     REFERENCE(I_SET_LIST_DEFAULT) TYPE  XMARK OPTIONAL
+*"     VALUE(I_DISABLE_LBOX_1VAL) TYPE  XMARK OPTIONAL
+*"     REFERENCE(I_TABCONTROL) TYPE  ZDD_TABCONTROL DEFAULT
+*"       'TABCONTROL'
+*"  EXPORTING
+*"     REFERENCE(I_ERR_FIELD) TYPE  ZST_ERR_FIELD
+*"----------------------------------------------------------------------
+CONSTANTS:
+    LC_FIELDSTS_INACTIVE TYPE ZDD_FIELDSTS VALUE '0000'.
+
+  DATA:
+    LS_FIELD_DB   TYPE ZTB_FIELD_DB,
+    LT_FIELD_DB   TYPE TABLE OF ZTB_FIELD_DB,
+    LW_FULLFIELD  TYPE CHAR100,
+    LS_ERR_FIELD  TYPE ZST_ERR_FIELD,
+    LS_HL_FIELD   TYPE ZST_ERR_FIELD,
+    LT_ERR_FIELD  TYPE TABLE OF ZST_ERR_FIELD,
+    LT_HL_FIELD   TYPE TABLE OF ZST_ERR_FIELD,
+    LT_SCR_STEP   TYPE ZTT_SCR_CHKSTEP,
+    LW_PG_FIELD   TYPE CHAR100,
+    LW_DISABLE_F  TYPE XMARK,
+    LW_TOTAL_LINE TYPE I.
+  FIELD-SYMBOLS:
+    <LF_ERR_FIELD>    TYPE ANY,
+    <LF_CURRENT_LINE> TYPE I,
+    <LF_LOOP_TAB>     TYPE ANY TABLE.
+
+* Init
+  CLEAR: LT_ERR_FIELD, LT_HL_FIELD.
+
+*--------------------------------------------------------------------*
+* Modify screen
+*--------------------------------------------------------------------*
+* Prepare field status
+  PERFORM PREPARE_FIELD_STATUS
+    USING I_CPROG
+ CHANGING I_CONFIG_PROG.
+
+* Preapare check steps
+  PERFORM PREPARE_PROG_STEP
+    USING I_CONFIG_PROG
+          I_DYNNR
+ CHANGING LT_SCR_STEP.
+
+  IF LT_SCR_STEP[] IS INITIAL.
+    LT_FIELD_DB = GT_FIELD_DB.
+  ELSE.
+    LOOP AT GT_FIELD_DB INTO LS_FIELD_DB
+      WHERE TABCONTROL = I_TABCONTROL.
+      READ TABLE LT_SCR_STEP TRANSPORTING NO FIELDS
+        WITH KEY CSTEP = LS_FIELD_DB-CSTEP.
+      IF SY-SUBRC IS INITIAL.
+        APPEND LS_FIELD_DB TO LT_FIELD_DB.
+      ENDIF.
+    ENDLOOP.
+  ENDIF.
+
+* Display screen elements as config in ZTC_PROG->Field status
+  IF LT_FIELD_DB[] IS NOT INITIAL.
+    LOOP AT SCREEN.
+      IF I_MODE = GC_SMODE_DISPLAY.
+        SCREEN-INPUT      = '0'.
+        MODIFY SCREEN.
+      ELSE.
+*       Find field on screen
+        READ TABLE LT_FIELD_DB INTO LS_FIELD_DB
+          WITH KEY  FIELDNAME = SCREEN-NAME
+                    DYNNR     = I_DYNNR.
+        IF SY-SUBRC IS NOT INITIAL.
+*         Find field on subscreen
+          READ TABLE LT_FIELD_DB INTO LS_FIELD_DB
+            WITH KEY  FIELDNAME = SCREEN-NAME
+                      SUBSCR    = I_DYNNR.
+          IF SY-SUBRC IS NOT INITIAL.
+*           Find label field on screen
+            READ TABLE LT_FIELD_DB INTO LS_FIELD_DB
+              WITH KEY  LABELF = SCREEN-NAME
+                        DYNNR  = I_DYNNR.
+            IF SY-SUBRC IS NOT INITIAL.
+*           Find label field on subscreen
+              READ TABLE LT_FIELD_DB INTO LS_FIELD_DB
+                WITH KEY  LABELF = SCREEN-NAME
+                          SUBSCR = I_DYNNR.
+            ENDIF.
+          ENDIF.
+        ENDIF.
+        IF SY-SUBRC IS INITIAL
+        AND LS_FIELD_DB-FIELDSTS IS NOT INITIAL.
+*         Check current line is in table
+          CONCATENATE '(' LS_FIELD_DB-REPID ')'
+                      LS_FIELD_DB-TABCONTROL
+                      '-CURRENT_LINE'
+                 INTO LW_PG_FIELD.
+          ASSIGN (LW_PG_FIELD) TO <LF_CURRENT_LINE>.
+          CHECK SY-SUBRC IS INITIAL.
+
+          CONCATENATE '(' LS_FIELD_DB-REPID ')'
+                      LS_FIELD_DB-LOOPTAB
+                 INTO LW_PG_FIELD.
+          ASSIGN (LW_PG_FIELD) TO <LF_LOOP_TAB>.
+          CHECK SY-SUBRC IS INITIAL.
+
+          DESCRIBE TABLE <LF_LOOP_TAB> LINES LW_TOTAL_LINE.
+
+          IF LW_TOTAL_LINE < <LF_CURRENT_LINE>.
+            RETURN.
+          ENDIF.
+
+*         Inactive elements
+          IF LS_FIELD_DB-FIELDSTS = LC_FIELDSTS_INACTIVE.
+            SCREEN-ACTIVE   = '0'.
+            IF I_CLEAR_INACTIVE = GC_XMARK
+            AND LS_FIELD_DB-FIELDNAME = SCREEN-NAME.
+              PERFORM CLEAR_INACTIVE
+                USING LS_FIELD_DB.
+            ENDIF.
+*         Active elements (only if not label)
+          ELSEIF LS_FIELD_DB-FIELDSTS IS NOT INITIAL
+             AND LS_FIELD_DB-LABELF <> SCREEN-NAME.
+            SCREEN-INPUT      = LS_FIELD_DB-FIELDSTS+0(1).
+            SCREEN-OUTPUT     = LS_FIELD_DB-FIELDSTS+1(1).
+            SCREEN-REQUIRED   = LS_FIELD_DB-FIELDSTS+2(1).
+            SCREEN-DISPLAY_3D = LS_FIELD_DB-FIELDSTS+3(1).
+          ENDIF.
+          MODIFY SCREEN.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
+  ENDIF.
+
+  PERFORM  ERROR_FIELDS_TAB_IMPORT
+     USING I_CPROG I_DYNNR I_TABCONTROL
+  CHANGING LT_ERR_FIELD .
+
+* Show error field and set cursor
+  LOOP AT LT_ERR_FIELD INTO LS_ERR_FIELD.
+    I_ERR_FIELD = LS_ERR_FIELD.
+    IF LS_ERR_FIELD-DYNNR <> SY-DYNNR
+    OR ( LS_ERR_FIELD-FPOSI > GW_MSG_SHOWED-FPOSI
+     AND GW_MSG_SHOWED-FPOSI IS NOT INITIAL ).
+      RETURN.
+    ENDIF.
+
+*   Get value from called program
+    CONCATENATE '(' I_CPROG ')' LS_ERR_FIELD-FIELD INTO LW_FULLFIELD.
+    ASSIGN (LW_FULLFIELD) TO <LF_ERR_FIELD>.
+    IF SY-SUBRC IS INITIAL.
+      CALL FUNCTION 'ZFM_SCR_SHOW_MSG_FOR_FIELD'
+        EXPORTING
+          I_RETURN    = LS_ERR_FIELD
+          I_FIELD     = <LF_ERR_FIELD>
+          I_CPROG     = I_CPROG
+        IMPORTING
+          E_DISABLE_F = LW_DISABLE_F.
+    ELSE.
+*     Show msg with no value
+      CALL FUNCTION 'ZFM_SCR_SHOW_MSG_FOR_FIELD'
+        EXPORTING
+          I_RETURN    = LS_ERR_FIELD
+          I_CPROG     = I_CPROG
+        IMPORTING
+          E_DISABLE_F = LW_DISABLE_F.
+    ENDIF.
+    IF LS_ERR_FIELD-TYPE = 'E' AND LW_DISABLE_F IS INITIAL.
+      GW_MSG_SHOWED = LS_ERR_FIELD.
+      EXIT.
+    ENDIF.
+  ENDLOOP.
+
+* Highlight field
+  PERFORM HIGHLIGHT_FIELDS_IMPORT
+    USING I_CPROG
+          I_DYNNR
+    CHANGING LT_HL_FIELD.
+
+  IF LT_HL_FIELD IS NOT INITIAL.
+    CALL FUNCTION 'ZFM_SCR_HIGHLIGHT_FIELD'
+      EXPORTING
+        IT_FIELD = LT_HL_FIELD.
+  ENDIF.
+
+  IF I_SET_LIST_VALUES IS NOT INITIAL.
+    LOOP AT LT_FIELD_DB INTO LS_FIELD_DB
+      WHERE SETLIST = GC_XMARK
+        AND ( DYNNR = I_DYNNR OR SUBSCR = I_DYNNR ).
+      PERFORM SET_LIST_BOX_VALUE
+        USING LS_FIELD_DB
+              I_SET_LIST_DEFAULT
+              I_DISABLE_LBOX_1VAL.
+    ENDLOOP.
+  ENDIF.
+
+
+
+
+
+ENDFUNCTION.

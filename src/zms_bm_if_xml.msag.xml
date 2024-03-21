@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZMS_BM_IF_XML</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>IF XML: Message class</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>System error</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Gói tin nhận vào không có nội dung</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Cấu trúc gói tin không theo khuôn dạng XML quy định</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Trùng mã gói tin &amp;1 đã nhận vào hệ thống</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Không lưu được gói tin &amp;1 vào bảng tạm</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Đã lưu gói tin &amp;1 vào bảng tạm</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Gói tin &amp;1 có TRAN_CODE &amp;2 không đúng với TRAN_CODE &amp;3 đang xử lý</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Gói tin &amp;1 có BODY không đúng định dạng XML</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Đã xử lý thành công gói tin &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Lưu gói tin &amp;1 vào tác nghiệp lỗi</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Gói tin có mã TRAN_CODE &amp;1 chưa được cấu hình xử lý</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Gói tin nhận vào không có thông tin &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Đã xử lý thành công &amp;1 gói tin</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Cấu hình transaction &amp;1, body data type &amp;2 không hợp lệ</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Cấu hình transaction &amp;1, attribute &amp;2, field &amp;3 không hợp lệ</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Gói tin &amp;1 có lỗi khi kiểm tra</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Phản hồi của trục: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>Thiếu thông tin hồ sơ vào</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Chọn 1 loại dữ liệu cần xử lý</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Cơ quan thuế không hợp lệ</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>Gói tin phản hồi không xem được chi tiết</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>Không có dữ liệu để gửi tin</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Gửi gói tin &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Chọn ít nhất 1 gói tin để xử lý</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Trạng thái &amp;1 không được phép chuyển sang trạng thái khác</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Phải chọn các gói tin có cùng trạng thái</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Cập nhật thông tin thành công</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Cập nhật bảng &amp;1 lỗi</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Gói tin &quot;&amp;1&quot; có trạng thái &quot;&amp;2&quot; không hợp lệ để chuyển</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>Tháng tổng hợp không hợp lệ</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>Mã gói tin &amp;1 cần phản hồi không tồn tại</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Không tồn tại dữ liệu tờ khai phải nộp</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>Đã gửi &amp;1 gói tin</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Trùng mã giao dịch &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>Mã giao dịch không được để trống</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMS_BM_IF_XML</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>Đã xử lý thành công giao dịch &amp;1</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

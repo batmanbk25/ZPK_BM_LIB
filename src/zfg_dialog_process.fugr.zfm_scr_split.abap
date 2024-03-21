@@ -1,0 +1,95 @@
+FUNCTION ZFM_SCR_SPLIT.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_NO_PART) TYPE  I DEFAULT 2
+*"     REFERENCE(I_REPID) TYPE  REPID OPTIONAL
+*"     REFERENCE(I_DYNNR) TYPE  DYNNR OPTIONAL
+*"  EXPORTING
+*"     REFERENCE(E_CON_LEFT) TYPE REF TO  CL_GUI_CONTAINER
+*"     REFERENCE(E_CON_RIGHT) TYPE REF TO  CL_GUI_CONTAINER
+*"     REFERENCE(E_CON_LEFT_TOP) TYPE REF TO  CL_GUI_CONTAINER
+*"     REFERENCE(E_CON_LEFT_BOT) TYPE REF TO  CL_GUI_CONTAINER
+*"     REFERENCE(E_CON_ROOT) TYPE REF TO  CL_GUI_CONTAINER
+*"----------------------------------------------------------------------
+  DATA:
+   LO_CON_ROOT                 TYPE REF TO CL_GUI_DOCKING_CONTAINER,
+   LO_SPLIT1                   TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+   LO_SPLIT2                   TYPE REF TO CL_GUI_SPLITTER_CONTAINER,
+   LO_CON_LEFT                 TYPE REF TO CL_GUI_CONTAINER,
+   LO_CON_RIGHT                TYPE REF TO CL_GUI_CONTAINER,
+   LO_CON_LEFTTOP              TYPE REF TO CL_GUI_CONTAINER,
+   LO_CON_LEFTBOT              TYPE REF TO CL_GUI_CONTAINER.
+
+* Create Root container
+  IF I_REPID IS INITIAL
+  OR I_DYNNR IS INITIAL.
+    CREATE OBJECT LO_CON_ROOT
+      EXPORTING
+        LIFETIME  = CNTL_LIFETIME_DYNPRO
+        EXTENSION = CL_GUI_DOCKING_CONTAINER=>WS_MAXIMIZEBOX
+      EXCEPTIONS
+        OTHERS    = 6.
+  ELSE.
+    CREATE OBJECT LO_CON_ROOT
+      EXPORTING
+        REPID     = I_REPID
+        DYNNR     = I_DYNNR
+        EXTENSION = CL_GUI_DOCKING_CONTAINER=>WS_MAXIMIZEBOX
+      EXCEPTIONS
+        OTHERS    = 6.
+  ENDIF.
+
+* Split root container to 2 columns
+  CREATE OBJECT LO_SPLIT1
+    EXPORTING
+      PARENT  = LO_CON_ROOT
+      ROWS    = 1
+      COLUMNS = 2
+    EXCEPTIONS
+      OTHERS  = 1.
+  IF SY-SUBRC NE 0 .
+    MESSAGE ID SY-MSGID TYPE 'I' NUMBER SY-MSGNO
+            WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4 .
+    EXIT .
+  ENDIF .
+
+* Set row mode absolute
+  LO_SPLIT1->SET_ROW_MODE(
+    EXPORTING MODE = CL_GUI_SPLITTER_CONTAINER=>MODE_ABSOLUTE ).
+
+* Set left column width
+  LO_SPLIT1->SET_COLUMN_WIDTH( ID = 1 WIDTH = 30 ).
+
+* Init config and template containers
+  LO_CON_LEFT     = LO_SPLIT1->GET_CONTAINER( ROW = 1 COLUMN = 1 ).
+  LO_CON_RIGHT   = LO_SPLIT1->GET_CONTAINER( ROW = 1 COLUMN = 2 ).
+
+  IF I_NO_PART = 3.
+*   Split config container to 2 row
+    CREATE OBJECT LO_SPLIT2
+      EXPORTING
+        PARENT  = LO_CON_LEFT
+        ROWS    = 2
+        COLUMNS = 1
+      EXCEPTIONS
+        OTHERS  = 1.
+    IF SY-SUBRC NE 0 .
+      MESSAGE ID SY-MSGID TYPE 'I' NUMBER SY-MSGNO
+              WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4 .
+      EXIT .
+    ENDIF .
+
+*   Init Component and component config values containers
+    LO_CON_LEFTTOP  = LO_SPLIT2->GET_CONTAINER( ROW = 1 COLUMN = 1 ).
+    LO_CON_LEFTBOT  = LO_SPLIT2->GET_CONTAINER( ROW = 2 COLUMN = 1 ).
+  ENDIF.
+
+* Set export container
+  E_CON_LEFT                  = LO_CON_LEFT.
+  E_CON_RIGHT                 = LO_CON_RIGHT.
+  E_CON_LEFT_TOP              = LO_CON_LEFTTOP.
+  E_CON_LEFT_BOT              = LO_CON_LEFTBOT.
+  E_CON_ROOT                  = LO_CON_ROOT.
+
+ENDFUNCTION.

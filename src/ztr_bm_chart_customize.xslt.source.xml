@@ -1,0 +1,61 @@
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates" xmlns:ddic="http://www.sap.com/abapxml/types/dictionary" xmlns:def="http://www.sap.com/abapxml/types/defined">
+  <tt:root name="ROOT" type="?"/>
+  <tt:root name="DATA" type="ddic:ZST_BM_CHART_CONF"/>
+  <tt:template>
+    <SAPChartCustomizing version="1.1">
+      <GlobalSettings>
+        <FileType>PNG</FileType>
+        <Width>1024</Width>
+        <Height>768</Height>
+        <Dimension>
+          <tt:value ref=".DATA.DIMENSION_TX"/>
+        </Dimension>
+        <ChartType tt:value-ref=".DATA.CHARTTYPE_TX"/>
+      </GlobalSettings>
+      <Elements>
+        <ChartElements>
+          <Title>
+            <Caption tt:value-ref=".DATA.GLOBAL.TITLE"/>
+          </Title>
+        </ChartElements>
+        <ChartAxes>
+          <CategoryAxis>
+            <Title>
+              <Caption tt:value-ref=".DATA.CAT_LAYO.CAT_TITLE"/>
+            </Title>
+            <Unit>
+              <Caption tt:value-ref=".DATA.CAT_LAYO.CAT_UNIT"/>
+            </Unit>
+          </CategoryAxis>
+          <ValueAxis id="ValueAxisLeft">
+            <Visibility>true</Visibility>
+            <Title>
+              <Caption tt:value-ref=".DATA.GLOBAL.LTITLE"/>
+            </Title>
+            <Unit>
+              <Caption tt:value-ref=".DATA.GLOBAL.LUNIT"/>
+            </Unit>
+          </ValueAxis>
+          <ValueAxis id="ValueAxisRight">
+            <Visibility>true</Visibility>
+            <Title>
+              <Caption tt:value-ref=".DATA.GLOBAL.RTITLE"/>
+            </Title>
+            <Unit>
+              <Caption tt:value-ref=".DATA.GLOBAL.RUNIT"/>
+            </Unit>
+          </ValueAxis>
+        </ChartAxes>
+      </Elements>
+      <Values>
+        <tt:loop ref=".DATA.SERI_LAYO">
+          <Series>
+            <tt:attribute name="id" value-ref="SERI_FIELD"/>
+            <Color tt:value-ref="SERI_COLOR"/>
+          </Series>
+        </tt:loop>
+      </Values>
+    </SAPChartCustomizing>
+  </tt:template>
+</tt:transform>

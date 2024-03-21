@@ -1,0 +1,55 @@
+FUNCTION ZFM_BM_CHART_DISPLAY.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_CHART_CONF) TYPE  ZST_BM_CHART_CONF
+*"     REFERENCE(IT_TABDATA) TYPE  TABLE
+*"     REFERENCE(I_ON_CALL) TYPE  XMARK OPTIONAL
+*"     REFERENCE(I_CPROG) TYPE  CPROG DEFAULT SY-CPROG
+*"     REFERENCE(I_DYNNR) TYPE  DYNNR DEFAULT SY-DYNNR
+*"     REFERENCE(I_CUS_CONTROL_NAME) TYPE  SCRFNAME
+*"         DEFAULT 'CUS_CHART'
+*"     REFERENCE(I_EXTENSION) TYPE  INT4 DEFAULT 800
+*"     REFERENCE(I_SIDE) TYPE  INT4 DEFAULT 1
+*"--------------------------------------------------------------------
+DATA:
+    LO_IXML_DATA_DOC   TYPE REF TO IF_IXML_DOCUMENT,
+    LO_IXML_CUSTOM_DOC TYPE REF TO IF_IXML_DOCUMENT,
+    LO_OSTREAM         TYPE REF TO IF_IXML_OSTREAM,
+    LW_XSTR            TYPE XSTRING,
+    LW_STR             TYPE STRING.
+
+* For initial display of graph data.
+  IF GO_CHART_ENGINE IS INITIAL.
+*   Create chart objects
+    PERFORM CREATE_CHART_OBJECTS
+      USING I_ON_CALL
+            I_EXTENSION
+            I_SIDE
+            I_CUS_CONTROL_NAME
+            I_CPROG I_DYNNR.
+
+*   Set fontend layout. Default 2D bar.
+    PERFORM CHART_CHANGE_CUSTOMIZE
+      USING I_CHART_CONF
+      CHANGING GO_CHART_ENGINE.
+  ENDIF.
+
+* Bind data to chart
+  PERFORM CHART_BIND_DATA
+    USING I_CHART_CONF
+          IT_TABDATA
+    CHANGING GO_CHART_ENGINE.
+
+  IF I_ON_CALL IS INITIAL.
+    CALL SCREEN 0100.
+  ELSE.
+*   Render the Graph Object.
+    CALL METHOD GO_CHART_ENGINE->RENDER.
+  ENDIF.
+
+
+
+
+
+ENDFUNCTION.

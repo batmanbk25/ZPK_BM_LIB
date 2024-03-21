@@ -1,0 +1,44 @@
+FUNCTION ZFM_DATE_MONTH_TO_QUARTER.
+*"--------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(I_YEAR) TYPE  NUMC4
+*"     REFERENCE(I_MONTH) TYPE  NUMC2
+*"  EXPORTING
+*"     REFERENCE(E_QUARTER) TYPE  PERSL_KK
+*"     REFERENCE(E_QUARTER_NM) TYPE  PERSLT_KK
+*"--------------------------------------------------------------------
+DATA:
+    LW_DATE             TYPE SY-DATUM,
+    LS_QUARTER          TYPE GTY_QUARTER.
+
+  READ TABLE GT_QUARTER INTO LS_QUARTER
+    WITH KEY  YEAR  = I_YEAR
+              MONTH = I_MONTH BINARY SEARCH.
+  IF SY-SUBRC IS INITIAL.
+    E_QUARTER       = LS_QUARTER-QUART.
+    E_QUARTER_NM    = LS_QUARTER-QUANM.
+  ELSE.
+    CONCATENATE I_YEAR I_MONTH '01' INTO LW_DATE.
+
+    CALL FUNCTION 'ZFM_DATE_GET_PERIOD'
+      EXPORTING
+       I_DATE               = LW_DATE
+       I_GET_QUARTER        = 'X'
+      IMPORTING
+        E_QUARTER           = E_QUARTER
+        E_PERSLT_KK         = E_QUARTER_NM.
+
+    LS_QUARTER-YEAR   = I_YEAR.
+    LS_QUARTER-MONTH  = I_MONTH.
+    LS_QUARTER-QUART  = E_QUARTER.
+    LS_QUARTER-QUANM  = E_QUARTER_NM.
+    APPEND LS_QUARTER TO GT_QUARTER.
+    SORT GT_QUARTER BY YEAR MONTH.
+  ENDIF.
+
+
+
+
+
+ENDFUNCTION.
