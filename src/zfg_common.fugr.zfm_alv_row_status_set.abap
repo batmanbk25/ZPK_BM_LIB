@@ -1,5 +1,5 @@
 FUNCTION ZFM_ALV_ROW_STATUS_SET.
-*"--------------------------------------------------------------------
+*"----------------------------------------------------------------------
 *"*"Local Interface:
 *"  IMPORTING
 *"     REFERENCE(I_MTYPE) TYPE  BAPI_MTYPE DEFAULT 'S'
@@ -9,7 +9,7 @@ FUNCTION ZFM_ALV_ROW_STATUS_SET.
 *"     REFERENCE(E_ROWCOLOR) TYPE  ANY
 *"  CHANGING
 *"     REFERENCE(C_ROW_DATA) TYPE  ANY
-*"--------------------------------------------------------------------
+*"----------------------------------------------------------------------
 DATA:
     LS_STYL           TYPE LVC_S_STYL.
   FIELD-SYMBOLS:

@@ -35,13 +35,13 @@
     <item>
      <ID>I</ID>
      <KEY>004</KEY>
-     <ENTRY>Danh sách lỗi</ENTRY>
+     <ENTRY>Messages list</ENTRY>
      <LENGTH>13</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>005</KEY>
-     <ENTRY>Ẩn/Hiện dòng lỗi</ENTRY>
+     <ENTRY>Show/hide error line</ENTRY>
      <LENGTH>20</LENGTH>
     </item>
     <item>
