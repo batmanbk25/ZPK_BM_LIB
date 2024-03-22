@@ -72,14 +72,9 @@ CONSTANTS:
 * Decimal
   GC_CFORMAT_DEC              TYPE ZDD_BM_DF_FORMAT VALUE 'DEC',
   GC_REGEX_DEC                TYPE STRING VALUE
-                                '^(-?\d+)(?:(\s)*|([.,])([\d]+))(\s)*$',
+                                '^(\d+)(?:(\s)*|([.,])([\d]+))(\s)*$',
   GC_REGEX_REPLACE_DEC        TYPE STRING VALUE `$1.$4`,
   GC_TFORMAT_DEC              TYPE STRING VALUE 'Decimal',
-* Decimal Scientific
-  GC_CFORMAT_DEC2             TYPE ZDD_BM_DF_FORMAT VALUE 'DEC',
-  GC_REGEX_DEC2               TYPE STRING VALUE
-                                '^(-?\d+)(?:(\s)*|([.,])([\d]+))(\s)*([E,e]-\d+)*(\s)*$',
-  GC_REGEX_REPLACE_DEC2       TYPE STRING VALUE `$1.$4$6`,
 * Char
   GC_CFORMAT_CHR              TYPE ZDD_BM_DF_FORMAT VALUE 'CHR',
   "$. Endregion: Format Check list
@@ -109,5 +104,4 @@ DATA:
   GT_DF_TYPLS                 TYPE TABLE OF ZTB_BM_DF_TYPLS,
   GT_DF_TYPEC                 TYPE TABLE OF ZTB_BM_DF_TYP_EC,
   GT_DF_ECODE                 TYPE TABLE OF ZTB_BM_DF_EC,
-  GT_DF_CHKGRP_DAT            TYPE TABLE OF ZST_BM_DF_CHKGRP_DAT,
-  GT_BM_DF_STR                TYPE TABLE OF ZST_BM_DF_STR.
+  GT_DF_CHKGRP_DAT            TYPE TABLE OF ZST_BM_DF_CHKGRP_DAT.

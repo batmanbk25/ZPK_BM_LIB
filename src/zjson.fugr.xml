@@ -4,7 +4,6 @@
   <asx:values>
    <AREAT>groupe de fonction JSON</AREAT>
    <INCLUDES>
-    <SOBJ_NAME>LZJSONTOP</SOBJ_NAME>
     <SOBJ_NAME>SAPLZJSON</SOBJ_NAME>
    </INCLUDES>
    <FUNCTIONS>

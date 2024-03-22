@@ -1,3 +1,4 @@
+* regenerated at 27.11.2013 23:12:29 by  TUANBA
 FUNCTION-POOL ZFG_PROG_MAINT             MESSAGE-ID SV.
 
 * INCLUDE LZFG_PROG_MAINTD...                " Local class definition

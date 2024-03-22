@@ -17,44 +17,7 @@
     </item>
     <item>
      <ID>S</ID>
-     <KEY>P_ALLCS</KEY>
-     <ENTRY>Collect all Customizing tables</ENTRY>
-     <LENGTH>38</LENGTH>
-    </item>
-    <item>
-     <ID>S</ID>
-     <KEY>P_TRADL</KEY>
-     <ENTRY>Download XML</ENTRY>
-     <LENGTH>20</LENGTH>
-    </item>
-    <item>
-     <ID>S</ID>
-     <KEY>P_TRATB</KEY>
-     <ENTRY>Transport tables</ENTRY>
-     <LENGTH>24</LENGTH>
-    </item>
-    <item>
-     <ID>S</ID>
-     <KEY>P_TRATR</KEY>
-     <ENTRY>Using TR</ENTRY>
-     <LENGTH>16</LENGTH>
-    </item>
-    <item>
-     <ID>S</ID>
-     <KEY>P_TRAUL</KEY>
-     <ENTRY>Upload XML</ENTRY>
-     <LENGTH>18</LENGTH>
-    </item>
-    <item>
-     <ID>S</ID>
      <KEY>S_OBJNM</KEY>
-     <ENTRY>.</ENTRY>
-     <LENGTH>18</LENGTH>
-     <SPLIT>D</SPLIT>
-    </item>
-    <item>
-     <ID>S</ID>
-     <KEY>S_PACKG</KEY>
      <ENTRY>.</ENTRY>
      <LENGTH>9</LENGTH>
      <SPLIT>D</SPLIT>

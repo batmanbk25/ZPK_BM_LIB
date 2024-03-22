@@ -5,6 +5,9 @@
    <MASTER_LANGUAGE>E</MASTER_LANGUAGE>
    <STARTING_FOLDER>/src/</STARTING_FOLDER>
    <FOLDER_LOGIC>PREFIX</FOLDER_LOGIC>
+   <IGNORE>
+    <item>/src/zfg_data_process.fugr.zfm_data_str_user_log.abap</item>
+   </IGNORE>
   </DATA>
  </asx:values>
 </asx:abap>

@@ -14,7 +14,4 @@
 * INCLUDE LZFG_BM_POPUPP...                  " Local class implement.
 * INCLUDE LZFG_BM_POPUPT99.                  " ABAP Unit tests
 
-  INCLUDE LZFG_BM_POPUPF01.
-
-  LOAD-OF-PROGRAM.
-    PERFORM 0000_INIT_PROC.
+INCLUDE lzfg_bm_popupf01.
