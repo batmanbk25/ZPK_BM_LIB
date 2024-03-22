@@ -370,49 +370,42 @@ FORM UPLOAD_PROCESSING.
   " Assign Program Name Similar T-Code CG3Y
   SY-CPROG = 'RC1TCG3Z'.
 
-*  " Check cofile Exist on Application Server
-*  CLEAR: LW_KFILE_EXISTS.
-*  lw_server_file_path = GW_KFILE_SERVER.
-*  call function 'DX_FILE_EXISTENCE_CHECK'
-*    exporting
-*      filename             = lw_server_file_path
-*      pc                   = ''
-*    importing
-*      file_exists          = LW_KFILE_EXISTS
-*    exceptions
-*      rfc_error            = 1
-*      frontend_error       = 2
-*      no_authority         = 3
-*      others               = 4.
-*
-*  " Check data file Exist on Application Server
-*  CLEAR: LW_RFILE_EXISTS.
-*  lw_server_file_path = GW_RFILE_SERVER.
-*  call function 'DX_FILE_EXISTENCE_CHECK'
-*    exporting
-*      filename             = lw_server_file_path
-*      pc                   = ''
-*    importing
-*      file_exists          = LW_RFILE_EXISTS
-*    exceptions
-*      rfc_error            = 1
-*      frontend_error       = 2
-*      no_authority         = 3
-*      others               = 4.
-*
-*  IF LW_KFILE_EXISTS = 'X' AND LW_RFILE_EXISTS = 'X'.
-*    CONCATENATE 'Cofile' GW_KFILE_SERVER 'and data file' GW_RFILE_SERVER
-*                'exist on Application Server. Do you want to override ?'
-*           INTO LW_TEXT_QUESTION SEPARATED BY SPACE.
-*  ELSEIF LW_KFILE_EXISTS = 'X' AND LW_RFILE_EXISTS = ''.
-*    CONCATENATE 'Cofile' GW_KFILE_SERVER
-*                'exists on Application Server. Do you want to override ?'
-*           INTO LW_TEXT_QUESTION SEPARATED BY SPACE.
-*  ELSEIF LW_KFILE_EXISTS = '' AND LW_RFILE_EXISTS = 'X'.
-*    CONCATENATE 'Data file' GW_RFILE_SERVER
-*                'exists on Application Server. Do you want to override ?'
-*           INTO LW_TEXT_QUESTION SEPARATED BY SPACE.
-*  ENDIF.
+  " Check cofile Exist on Application Server
+  CLEAR: LW_KFILE_EXISTS.
+  lw_server_file_path = GW_KFILE_SERVER.
+
+* local application server
+  OPEN DATASET lw_server_file_path FOR INPUT IN TEXT MODE ENCODING DEFAULT.
+  IF sy-subrc = 0.
+    LW_KFILE_EXISTS = 'X'.
+  ELSE.
+    LW_KFILE_EXISTS = space.
+  ENDIF.
+  CLOSE DATASET lw_server_file_path.
+  " Check data file Exist on Application Server
+  CLEAR: LW_RFILE_EXISTS.
+  lw_server_file_path = GW_RFILE_SERVER.
+  OPEN DATASET lw_server_file_path FOR INPUT IN TEXT MODE ENCODING DEFAULT.
+  IF sy-subrc = 0.
+    LW_RFILE_EXISTS = 'X'.
+  ELSE.
+    LW_RFILE_EXISTS = space.
+  ENDIF.
+  CLOSE DATASET lw_server_file_path.
+
+  IF LW_KFILE_EXISTS = 'X' AND LW_RFILE_EXISTS = 'X'.
+    CONCATENATE 'Cofile' GW_KFILE_SERVER 'and data file' GW_RFILE_SERVER
+                'exist on Application Server. Do you want to override ?'
+           INTO LW_TEXT_QUESTION SEPARATED BY SPACE.
+  ELSEIF LW_KFILE_EXISTS = 'X' AND LW_RFILE_EXISTS = ''.
+    CONCATENATE 'Cofile' GW_KFILE_SERVER
+                'exists on Application Server. Do you want to override ?'
+           INTO LW_TEXT_QUESTION SEPARATED BY SPACE.
+  ELSEIF LW_KFILE_EXISTS = '' AND LW_RFILE_EXISTS = 'X'.
+    CONCATENATE 'Data file' GW_RFILE_SERVER
+                'exists on Application Server. Do you want to override ?'
+           INTO LW_TEXT_QUESTION SEPARATED BY SPACE.
+  ENDIF.
 
   IF LW_KFILE_EXISTS <> '' AND LW_RFILE_EXISTS <> ''.
     LW_QUESTION = 'T'.

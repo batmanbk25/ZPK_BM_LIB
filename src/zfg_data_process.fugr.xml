@@ -245,13 +245,6 @@
        <TYP>THEAD-TDOBJECT</TYP>
       </RSIMP>
      </IMPORT>
-     <CHANGING>
-      <RSCHA>
-       <PARAMETER>CT_TEXT</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ZTT_BM_TX</TYP>
-      </RSCHA>
-     </CHANGING>
      <EXPORT>
       <RSEXP>
        <PARAMETER>ET_TX</PARAMETER>
@@ -277,11 +270,6 @@
       </RSFDO>
       <RSFDO>
        <PARAMETER>ET_TX</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Long text</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>CT_TEXT</PARAMETER>
        <KIND>P</KIND>
        <STEXT>Long text</STEXT>
       </RSFDO>
@@ -1301,35 +1289,6 @@
      </DOCUMENTATION>
     </item>
     <item>
-     <FUNCNAME>ZFM_DATA_STR_USER_LOG</FUNCNAME>
-     <SHORT_TEXT>Set user log info for structure</SHORT_TEXT>
-     <IMPORT>
-      <RSIMP>
-       <PARAMETER>I_ACTION</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>C</TYP>
-      </RSIMP>
-     </IMPORT>
-     <CHANGING>
-      <RSCHA>
-       <PARAMETER>CS_DATA</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ANY</TYP>
-      </RSCHA>
-     </CHANGING>
-     <DOCUMENTATION>
-      <RSFDO>
-       <PARAMETER>I_ACTION</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>I, U, D</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>CS_DATA</PARAMETER>
-       <KIND>P</KIND>
-      </RSFDO>
-     </DOCUMENTATION>
-    </item>
-    <item>
      <FUNCNAME>ZFM_DATA_SUBTRACT_STR</FUNCNAME>
      <SHORT_TEXT>Subtract between 2 structure using mark fields</SHORT_TEXT>
      <IMPORT>
@@ -2148,52 +2107,6 @@
        <PARAMETER>T_DES_DATA</PARAMETER>
        <KIND>P</KIND>
        <STEXT>Table need desciption data</STEXT>
-      </RSFDO>
-     </DOCUMENTATION>
-    </item>
-    <item>
-     <FUNCNAME>ZFM_SH_REBATEID_EXIT</FUNCNAME>
-     <SHORT_TEXT>FM exit search help rebate id</SHORT_TEXT>
-     <IMPORT>
-      <RSIMP>
-       <PARAMETER>SHLP</PARAMETER>
-       <TYP>SHLP_DESCR</TYP>
-      </RSIMP>
-      <RSIMP>
-       <PARAMETER>CALLCONTROL</PARAMETER>
-       <DBFIELD>DDSHF4CTRL</DBFIELD>
-      </RSIMP>
-     </IMPORT>
-     <TABLES>
-      <RSTBL>
-       <PARAMETER>SHLP_TAB</PARAMETER>
-       <TYP>SHLP_DESCT</TYP>
-      </RSTBL>
-      <RSTBL>
-       <PARAMETER>RECORD_TAB</PARAMETER>
-       <DBSTRUCT>SEAHLPRES</DBSTRUCT>
-      </RSTBL>
-     </TABLES>
-     <DOCUMENTATION>
-      <RSFDO>
-       <PARAMETER>SHLP</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Description of Search Help</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>CALLCONTROL</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Control Structure for F4 Process with Search Help Exit</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>SHLP_TAB</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>List of Alternative Elementary Search Helps</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>RECORD_TAB</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Search help result structure</STEXT>
       </RSFDO>
      </DOCUMENTATION>
     </item>

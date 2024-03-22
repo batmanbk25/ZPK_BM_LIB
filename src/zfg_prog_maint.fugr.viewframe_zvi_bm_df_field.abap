@@ -1,5 +1,7 @@
 *---------------------------------------------------------------------*
 *    program for:   VIEWFRAME_ZVI_BM_DF_FIELD
+*   generation date: 18.10.2018 at 11:09:14
+*   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 FUNCTION VIEWFRAME_ZVI_BM_DF_FIELD     .
 

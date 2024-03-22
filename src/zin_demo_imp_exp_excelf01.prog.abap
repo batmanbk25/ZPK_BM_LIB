@@ -101,12 +101,12 @@ FORM IMPORT_FILE.
     EXPORTING
       I_REPID       = SY-REPID.
 
-*  LOOP AT GT_IMP_DATA ASSIGNING <LF_IMP_DATA>.
-*    DO 9 TIMES.
-*      CONCATENATE <LF_IMP_DATA>-DESCR <LF_IMP_DATA>-DESCR
-*             INTO <LF_IMP_DATA>-DESCR.
-*    ENDDO.
-*  ENDLOOP.
+  LOOP AT GT_IMP_DATA ASSIGNING <LF_IMP_DATA>.
+    DO 9 TIMES.
+      CONCATENATE <LF_IMP_DATA>-DESCR <LF_IMP_DATA>-DESCR
+             INTO <LF_IMP_DATA>-DESCR.
+    ENDDO.
+  ENDLOOP.
 ENDFORM.                    " IMPORT_FILE
 
 *&---------------------------------------------------------------------*
@@ -210,6 +210,7 @@ FORM OUTPUT_DATA .
   GS_DATA-TITLE1 = TEXT-001.
   GS_DATA-TITLE2 = TEXT-002.
   GS_DATA-TITLE3 = TEXT-003.
+  GS_DATA-LOGO   = 'NIKOP'.
   GS_DATA-DETAIL = GT_IMP_DATA.
 
 ** Output report

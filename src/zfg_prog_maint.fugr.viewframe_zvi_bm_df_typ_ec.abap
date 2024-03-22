@@ -1,5 +1,7 @@
 *---------------------------------------------------------------------*
 *    program for:   VIEWFRAME_ZVI_BM_DF_TYP_EC
+*   generation date: 24.10.2018 at 10:15:33
+*   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 FUNCTION VIEWFRAME_ZVI_BM_DF_TYP_EC    .
 
