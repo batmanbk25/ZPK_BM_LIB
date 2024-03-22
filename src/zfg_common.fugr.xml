@@ -577,12 +577,6 @@
        <TYP>XMARK</TYP>
       </RSIMP>
       <RSIMP>
-       <PARAMETER>IT_ERRFIELD_TITLE</PARAMETER>
-       <OPTIONAL>X</OPTIONAL>
-       <REFERENCE>X</REFERENCE>
-       <TYP>LVC_T_FCAT</TYP>
-      </RSIMP>
-      <RSIMP>
        <PARAMETER>I_HIDE_ERRLINE</PARAMETER>
        <OPTIONAL>X</OPTIONAL>
        <REFERENCE>X</REFERENCE>
@@ -808,11 +802,6 @@
        <PARAMETER>I_SHOW_ERRBTN</PARAMETER>
        <KIND>P</KIND>
        <STEXT>Indicator: Line selected</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>IT_ERRFIELD_TITLE</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Error fields in grid title</STEXT>
       </RSFDO>
       <RSFDO>
        <PARAMETER>I_HIDE_ERRLINE</PARAMETER>
@@ -1055,85 +1044,6 @@
     <item>
      <FUNCNAME>ZFM_ALV_MESSAGE_PUT</FUNCNAME>
      <SHORT_TEXT>Put message of line</SHORT_TEXT>
-     <IMPORT>
-      <RSIMP>
-       <PARAMETER>I_MTYPE</PARAMETER>
-       <DEFAULT>&apos;E&apos;</DEFAULT>
-       <OPTIONAL>X</OPTIONAL>
-       <TYP>BAPI_MTYPE</TYP>
-      </RSIMP>
-      <RSIMP>
-       <PARAMETER>I_MESSAGE</PARAMETER>
-       <OPTIONAL>X</OPTIONAL>
-       <TYP>TEXT256</TYP>
-      </RSIMP>
-      <RSIMP>
-       <PARAMETER>I_AUTO_DISABLE</PARAMETER>
-       <DEFAULT>&apos;X&apos;</DEFAULT>
-       <OPTIONAL>X</OPTIONAL>
-       <TYP>XMARK</TYP>
-      </RSIMP>
-      <RSIMP>
-       <PARAMETER>I_RETURN</PARAMETER>
-       <OPTIONAL>X</OPTIONAL>
-       <TYP>ANY</TYP>
-      </RSIMP>
-     </IMPORT>
-     <CHANGING>
-      <RSCHA>
-       <PARAMETER>C_ALVLINE</PARAMETER>
-       <OPTIONAL>X</OPTIONAL>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ANY</TYP>
-      </RSCHA>
-     </CHANGING>
-     <EXPORT>
-      <RSEXP>
-       <PARAMETER>E_STATUS_ICON</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ZDD_STATUS_ICON</TYP>
-      </RSEXP>
-      <RSEXP>
-       <PARAMETER>E_ROWCOLOR</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ANY</TYP>
-      </RSEXP>
-     </EXPORT>
-     <DOCUMENTATION>
-      <RSFDO>
-       <PARAMETER>I_MTYPE</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Message type: S Success, E Error, W Warning, I Info, A Abort</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>I_MESSAGE</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Message</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>I_AUTO_DISABLE</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Auto disable error line</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>I_RETURN</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Return Parameter</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>E_STATUS_ICON</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Status icon</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>E_ROWCOLOR</PARAMETER>
-       <KIND>P</KIND>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>C_ALVLINE</PARAMETER>
-       <KIND>P</KIND>
-      </RSFDO>
-     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_ALV_ROWS_GET_SELECTED</FUNCNAME>
@@ -1232,67 +1142,6 @@
     <item>
      <FUNCNAME>ZFM_ALV_ROW_STATUS_SET</FUNCNAME>
      <SHORT_TEXT>Generate icon by message type</SHORT_TEXT>
-     <IMPORT>
-      <RSIMP>
-       <PARAMETER>I_MTYPE</PARAMETER>
-       <DEFAULT>&apos;S&apos;</DEFAULT>
-       <OPTIONAL>X</OPTIONAL>
-       <REFERENCE>X</REFERENCE>
-       <TYP>BAPI_MTYPE</TYP>
-      </RSIMP>
-      <RSIMP>
-       <PARAMETER>I_DISABLE</PARAMETER>
-       <OPTIONAL>X</OPTIONAL>
-       <REFERENCE>X</REFERENCE>
-       <TYP>XMARK</TYP>
-      </RSIMP>
-     </IMPORT>
-     <CHANGING>
-      <RSCHA>
-       <PARAMETER>C_ROW_DATA</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ANY</TYP>
-      </RSCHA>
-     </CHANGING>
-     <EXPORT>
-      <RSEXP>
-       <PARAMETER>E_STATUS_ICON</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ZDD_STATUS_ICON</TYP>
-      </RSEXP>
-      <RSEXP>
-       <PARAMETER>E_ROWCOLOR</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ANY</TYP>
-      </RSEXP>
-     </EXPORT>
-     <DOCUMENTATION>
-      <RSFDO>
-       <PARAMETER>I_MTYPE</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Message type: S Success, E Error, W Warning, I Info, A Abort</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>I_DISABLE</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Disable row</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>E_STATUS_ICON</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Status icon</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>E_ROWCOLOR</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Color of row</STEXT>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>C_ROW_DATA</PARAMETER>
-       <KIND>P</KIND>
-       <STEXT>Row data</STEXT>
-      </RSFDO>
-     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_BM_ALV_ITEM_DETAIL</FUNCNAME>

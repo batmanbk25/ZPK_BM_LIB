@@ -18,6 +18,53 @@
     <item>/src/ztb_bm_cstr_ms.tobj.xml</item>
     <item>/src/zvc_bm_cstrc.tobj.xml</item>
     <item>/src/zvi_bm_cstr_cv.tobj.xml</item>
+    <item>/src/zfg_data_process.fugr.conversion_exit_zzall_input.abap</item>
+    <item>/src/zfg_data_process.fugr.conversion_exit_zzall_output.abap</item>
+    <item>/src/zfg_data_process.fugr.lzfg_data_processf01.abap</item>
+    <item>/src/zfg_data_process.fugr.lzfg_data_processf01.xml</item>
+    <item>/src/zfg_data_process.fugr.lzfg_data_processtop.abap</item>
+    <item>/src/zfg_data_process.fugr.lzfg_data_processtop.xml</item>
+    <item>/src/zfg_data_process.fugr.saplzfg_data_process.abap</item>
+    <item>/src/zfg_data_process.fugr.saplzfg_data_process.xml</item>
+    <item>/src/zfg_data_process.fugr.xml</item>
+    <item>/src/zfg_data_process.fugr.zfm_bm_binary_to_binary.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_bm_data2xml_file.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_bm_data_from_xml_file.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_bm_text_fi_get_multi.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_bm_text_get_multi.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_bm_text_sd_get_multi.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_add_str.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_base64_coding.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_compare_str.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_compare_table.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_concatenate.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_cond_agg_to_set.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_cond_check_fit.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_cond_check_record.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_cond_set_check_record.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_cond_standardlize.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_expression_calc.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_get_component.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_get_field_blank.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_get_field_not_blank.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_move_str.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_original_get.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_set_mark_all_fields.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_set_mark_fr_source.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_subtract_str.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_table_move_correspond.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_unescape_html.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_update_table.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_upper_case.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_validate.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_data_value2text.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_dattab_build_with_keys.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_dattab_free_selection.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_dattab_get.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_dattab_get_desc.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_dattab_process_cursor.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_get_desc_for_field.abap</item>
+    <item>/src/zfg_data_process.fugr.zfm_spellamount1.abap</item>
    </IGNORE>
   </DATA>
  </asx:values>

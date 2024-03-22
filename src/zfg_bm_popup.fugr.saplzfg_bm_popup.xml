@@ -16,6 +16,18 @@
    <TPOOL>
     <item>
      <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Conditions</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Available characteristics</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>OPT</KEY>
      <ENTRY>Choose option</ENTRY>
      <LENGTH>23</LENGTH>

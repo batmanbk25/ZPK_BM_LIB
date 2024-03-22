@@ -4,6 +4,7 @@
   <asx:values>
    <AREAT>Job config</AREAT>
    <INCLUDES>
+    <SOBJ_NAME>LZFG_JBCFTOP</SOBJ_NAME>
     <SOBJ_NAME>SAPLZFG_JBCF</SOBJ_NAME>
    </INCLUDES>
    <FUNCTIONS>

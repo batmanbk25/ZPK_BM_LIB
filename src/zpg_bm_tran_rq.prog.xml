@@ -29,6 +29,12 @@
     </item>
     <item>
      <ID>S</ID>
+     <KEY>P_DOWRQ</KEY>
+     <ENTRY>Download</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
      <KEY>P_KPATH</KEY>
      <ENTRY>Cofiles path</ENTRY>
      <LENGTH>25</LENGTH>
@@ -50,8 +56,14 @@
      <ID>S</ID>
      <KEY>P_TRKORR</KEY>
      <ENTRY>.</ENTRY>
-     <LENGTH>9</LENGTH>
+     <LENGTH>20</LENGTH>
      <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_UPLRQ</KEY>
+     <ENTRY>Upload</ENTRY>
+     <LENGTH>14</LENGTH>
     </item>
    </TPOOL>
   </asx:values>

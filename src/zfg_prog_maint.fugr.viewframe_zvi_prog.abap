@@ -1,7 +1,5 @@
 *---------------------------------------------------------------------*
 *    program for:   VIEWFRAME_ZVI_PROG
-*   generation date: 08.11.2017 at 10:47:03 by user TUANBA
-*   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 FUNCTION VIEWFRAME_ZVI_PROG            .
 

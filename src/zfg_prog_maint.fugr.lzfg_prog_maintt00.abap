@@ -1,6 +1,12 @@
 *---------------------------------------------------------------------*
 *    view related data declarations
 *---------------------------------------------------------------------*
+*...processing: ZTB_BM_COND_NAME................................*
+DATA:  BEGIN OF STATUS_ZTB_BM_COND_NAME              .   "state vector
+         INCLUDE STRUCTURE VIMSTATUS.
+DATA:  END OF STATUS_ZTB_BM_COND_NAME              .
+CONTROLS: TCTRL_ZTB_BM_COND_NAME
+            TYPE TABLEVIEW USING SCREEN '0220'.
 *...processing: ZTB_BM_DATCON...................................*
 DATA:  BEGIN OF STATUS_ZTB_BM_DATCON                 .   "state vector
          INCLUDE STRUCTURE VIMSTATUS.
@@ -198,6 +204,42 @@ DATA: BEGIN OF ZVI_BM_CHA_SERI_TOTAL OCCURS 0010.
 INCLUDE STRUCTURE ZVI_BM_CHA_SERI.
           INCLUDE STRUCTURE VIMFLAGTAB.
 DATA: END OF ZVI_BM_CHA_SERI_TOTAL.
+
+*...processing: ZVI_BM_COND.....................................*
+TABLES: ZVI_BM_COND, *ZVI_BM_COND. "view work areas
+CONTROLS: TCTRL_ZVI_BM_COND
+TYPE TABLEVIEW USING SCREEN '0224'.
+DATA: BEGIN OF STATUS_ZVI_BM_COND. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_ZVI_BM_COND.
+* Table for entries selected to show on screen
+DATA: BEGIN OF ZVI_BM_COND_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE ZVI_BM_COND.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF ZVI_BM_COND_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF ZVI_BM_COND_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE ZVI_BM_COND.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF ZVI_BM_COND_TOTAL.
+
+*...processing: ZVI_BM_COND_DIM.................................*
+TABLES: ZVI_BM_COND_DIM, *ZVI_BM_COND_DIM. "view work areas
+CONTROLS: TCTRL_ZVI_BM_COND_DIM
+TYPE TABLEVIEW USING SCREEN '0222'.
+DATA: BEGIN OF STATUS_ZVI_BM_COND_DIM. "state vector
+          INCLUDE STRUCTURE VIMSTATUS.
+DATA: END OF STATUS_ZVI_BM_COND_DIM.
+* Table for entries selected to show on screen
+DATA: BEGIN OF ZVI_BM_COND_DIM_EXTRACT OCCURS 0010.
+INCLUDE STRUCTURE ZVI_BM_COND_DIM.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF ZVI_BM_COND_DIM_EXTRACT.
+* Table for all entries loaded from database
+DATA: BEGIN OF ZVI_BM_COND_DIM_TOTAL OCCURS 0010.
+INCLUDE STRUCTURE ZVI_BM_COND_DIM.
+          INCLUDE STRUCTURE VIMFLAGTAB.
+DATA: END OF ZVI_BM_COND_DIM_TOTAL.
 
 *...processing: ZVI_BM_DATCON...................................*
 TABLES: ZVI_BM_DATCON, *ZVI_BM_DATCON. "view work areas
@@ -758,6 +800,7 @@ INCLUDE STRUCTURE ZVI_SHEET_LAYOUT.
 DATA: END OF ZVI_SHEET_LAYOUT_TOTAL.
 
 *.........table declarations:.................................*
+TABLES: *ZTB_BM_COND_NAME              .
 TABLES: *ZTB_BM_DATCON                 .
 TABLES: *ZTB_BM_DATGROUP               .
 TABLES: *ZTB_BM_DATTYPE                .
@@ -785,6 +828,9 @@ TABLES: *ZTB_MC_BUSTAB                 .
 TABLES: ZTB_BM_ALV_LAYO                .
 TABLES: ZTB_BM_CHA_LAYO                .
 TABLES: ZTB_BM_CHA_SERI                .
+TABLES: ZTB_BM_COND                    .
+TABLES: ZTB_BM_COND_DIM                .
+TABLES: ZTB_BM_COND_NAME               .
 TABLES: ZTB_BM_DATCON                  .
 TABLES: ZTB_BM_DATGROUP                .
 TABLES: ZTB_BM_DATTYPE                 .

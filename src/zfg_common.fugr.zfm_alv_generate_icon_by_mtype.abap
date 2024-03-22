@@ -8,8 +8,8 @@ FUNCTION ZFM_ALV_GENERATE_ICON_BY_MTYPE.
 *"     REFERENCE(E_STATUS_ICON) TYPE  ZDD_STATUS_ICON
 *"     REFERENCE(E_ROWCOLOR) TYPE  ANY
 *"--------------------------------------------------------------------
-  DATA:
-      LW_ICON_NAME    TYPE CHAR50.
+DATA:
+    LW_ICON_NAME    TYPE CHAR50.
 
   CASE I_MTYPE.
     WHEN GC_MTYPE_E.
@@ -40,21 +40,15 @@ FUNCTION ZFM_ALV_GENERATE_ICON_BY_MTYPE.
       E_ROWCOLOR    = 'C510'.
   ENDCASE.
 
-  ASSIGN (LW_ICON_NAME) TO FIELD-SYMBOL(<LF_ICON>).
-  IF SY-SUBRC IS INITIAL.
-    E_STATUS_ICON = <LF_ICON>.
-  ENDIF.
-  RETURN.
-
   CALL FUNCTION 'ICON_CREATE'
     EXPORTING
-      NAME                  = LW_ICON_NAME
-    IMPORTING
-      RESULT                = E_STATUS_ICON
-    EXCEPTIONS
-      ICON_NOT_FOUND        = 1
-      OUTPUTFIELD_TOO_SHORT = 2
-      OTHERS                = 3.
+      NAME                       = LW_ICON_NAME
+   IMPORTING
+     RESULT                      = E_STATUS_ICON
+   EXCEPTIONS
+     ICON_NOT_FOUND              = 1
+     OUTPUTFIELD_TOO_SHORT       = 2
+     OTHERS                      = 3.
 
 
 

@@ -1,7 +1,5 @@
 *---------------------------------------------------------------------*
 *    program for:   VIEWFRAME_ZVI_BM_CHA_LAYO
-*   generation date: 25.01.2018 at 14:42:20
-*   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 FUNCTION VIEWFRAME_ZVI_BM_CHA_LAYO     .
 
