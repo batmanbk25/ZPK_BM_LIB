@@ -1019,10 +1019,38 @@
     <item>
      <FUNCNAME>ZFM_ALV_EXCL_EDIT_FC</FUNCNAME>
      <SHORT_TEXT>Exclude edit button in toolbar</SHORT_TEXT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>T_EXCL_FC</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>UI_FUNCTIONS</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>T_EXCL_FC</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Function Code</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_ALV_EXCL_FC_FM</FUNCNAME>
      <SHORT_TEXT>Exclude edit button in toolbar</SHORT_TEXT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>T_EXCL_FC</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SLIS_T_EXTAB</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>T_EXCL_FC</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Function Code</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_ALV_GENERATE_ICON_BY_MTYPE</FUNCNAME>
@@ -1078,6 +1106,32 @@
     <item>
      <FUNCNAME>ZFM_ALV_MESSAGE_CHK_BLANK</FUNCNAME>
      <SHORT_TEXT>Check blank fields and put message</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_REQSTR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>TABNAME</TYP>
+      </RSIMP>
+     </IMPORT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>C_ALVLINE</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ANY</TYP>
+      </RSCHA>
+     </CHANGING>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_REQSTR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Required structure name</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>C_ALVLINE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_ALV_MESSAGE_PUT</FUNCNAME>
@@ -1702,50 +1756,1008 @@
     <item>
      <FUNCNAME>ZFM_BM_CHART_DISPLAY</FUNCNAME>
      <SHORT_TEXT>Display graph</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_CHART_CONF</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZST_BM_CHART_CONF</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IT_TABDATA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TABLE</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_ON_CALL</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <DEFAULT>SY-CPROG</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CPROG</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <DEFAULT>SY-DYNNR</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DYNNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <DEFAULT>&apos;CUS_CHART&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SCRFNAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <DEFAULT>800</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>INT4</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <DEFAULT>1</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>INT4</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_CHART_CONF</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Chart configuration</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_TABDATA</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_ON_CALL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>On call program screen</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>CALL program</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Call screen</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Custom control name (User Custom control)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Extension of grid (Use Docking control)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Side to dock (Use Docking control)</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_BM_CHART_DISPLAY_TIMER</FUNCNAME>
      <SHORT_TEXT>Display graph</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IT_TABDATA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TABLE</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_INTERVAL</PARAMETER>
+       <DEFAULT>60</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SUBR_REFDATA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SLIS_FORMNAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_ON_CALL</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <DEFAULT>SY-CPROG</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CPROG</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <DEFAULT>SY-DYNNR</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DYNNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <DEFAULT>&apos;CUS_CHART&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SCRFNAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <DEFAULT>800</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>INT4</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <DEFAULT>1</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>INT4</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IT_TABDATA</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_INTERVAL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Refresh interval (seconds)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SUBR_REFDATA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Subroutine to refresh data</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_ON_CALL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>On call program screen</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>CALL program</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Call screen</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Custom control name (User Custom control)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Extension of grid (Use Docking control)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Side to dock (Use Docking control)</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_BM_CHART_STD_DISPLAY</FUNCNAME>
      <SHORT_TEXT>Display graph</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IT_TABDATA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TABLE</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_ON_CALL</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <DEFAULT>SY-CPROG</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CPROG</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <DEFAULT>SY-DYNNR</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DYNNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <DEFAULT>&apos;CUS_CHART&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SCRFNAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <DEFAULT>800</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>INT4</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <DEFAULT>1</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>INT4</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IT_TABDATA</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_ON_CALL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>On call program screen</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>CALL program</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Call screen</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Custom control name (User Custom control)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Extension of grid (Use Docking control)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Side to dock (Use Docking control)</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_BM_CHART_STD_DISPLAY2</FUNCNAME>
      <SHORT_TEXT>Display graph</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IT_TABDATA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TABLE</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_ON_CALL</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <DEFAULT>SY-CPROG</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CPROG</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <DEFAULT>SY-DYNNR</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DYNNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <DEFAULT>&apos;CUS_CHART&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SCRFNAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <DEFAULT>800</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>INT4</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <DEFAULT>1</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>INT4</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IT_TABDATA</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_ON_CALL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>On call program screen</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>CALL program</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DYNNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Call screen</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Custom control name (User Custom control)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Extension of grid (Use Docking control)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Side to dock (Use Docking control)</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_BM_CHART_STD_GET_CONFIG</FUNCNAME>
      <SHORT_TEXT>Display graph</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <DEFAULT>SY-CPROG</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CPROG</TYP>
+      </RSIMP>
+     </IMPORT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>C_CHART_CONF</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZST_BM_CHART_CONF</TYP>
+      </RSCHA>
+     </CHANGING>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>CALL program</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>C_CHART_CONF</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Chart configuration</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_BM_PAR_GET</FUNCNAME>
      <SHORT_TEXT>Get value of a variant (Parameter)</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_VAR_NAME</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>RVARI_VNAM</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_ACTIVE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZDD_BM_ACTIVE</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_VAR_VALUE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_VAR_NAME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>ABAP: Name of Variant Variable</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_ACTIVE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Active</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_VAR_VALUE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Variant value</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_BM_SIMPLE_TREE_FIRST_DISP</FUNCNAME>
      <SHORT_TEXT>Build tree from table</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_TREE_STR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZST_TREE_STR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SHOW</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CONTAINER</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REF TO CL_GUI_CUSTOM_CONTAINER</TYP>
+       <REF_CLASS>X</REF_CLASS>
+      </RSIMP>
+     </IMPORT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>T_TREE_TAB</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ANY TABLE</TYP>
+      </RSCHA>
+     </CHANGING>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_TREE_CONTROL</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REF TO CL_GUI_SIMPLE_TREE</TYP>
+       <REF_CLASS>X</REF_CLASS>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>T_NODES</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTT_TREESNODE</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_DOCK_CONTAINER</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REF TO CL_GUI_DOCKING_CONTAINER</TYP>
+       <REF_CLASS>X</REF_CLASS>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_TREE_STR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Tree structure</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SHOW</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Show tree</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Side to dock</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Extension of tree</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CONTAINER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Abstract Container for GUI Controls</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_TREE_CONTROL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Simple Tree Control</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_NODES</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Tree Control: Structure TREEV_NODE + TEXT Field of Len 100</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_DOCK_CONTAINER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Docking Control Container</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_TREE_TAB</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_BM_VIEW_NEST_DATA</FUNCNAME>
      <SHORT_TEXT>Display nest data structure</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_DATA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REF TO DATA</TYP>
+       <REF_CLASS>X</REF_CLASS>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_NODENAME</PARAMETER>
+       <DEFAULT>&apos;ROOT&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_TYPENAME</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>TYPENAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_HIDENULL</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>ET_DATA_VIEW</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTT_BM_DATA_VIEW</TYP>
+      </RSEXP>
+     </EXPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>INVALID_TYPE</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_DATA</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_NODENAME</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_TYPENAME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Name of Dictionary Type</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_HIDENULL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Hide null node</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ET_DATA_VIEW</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>ZST_BM_DATA_VIEW</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>INVALID_TYPE</PARAMETER>
+       <KIND>X</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_BUILD_TREE_ALV_FROM_TABLE</FUNCNAME>
      <SHORT_TEXT>Build ALV tree from table</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_TREE_STR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>ZST_TREE_STR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SHOW</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>SCRFNAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_LASTCOL</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SORT_TABLE</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_HIERARCHY_HEADER</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TREEV_HHDR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IS_VARIANT</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DISVARIANT</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SAVE</PARAMETER>
+       <DEFAULT>&apos;A&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CHAR01</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DEFAULT</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CHAR01</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IS_EXCEPTION_FIELD</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LVC_S_L004</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IT_SPECIAL_GROUPS</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LVC_T_SGRP</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_LOGO</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SDYDO_VALUE</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_BACKGROUND_ID</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SDYDO_KEY</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IT_TOOLBAR_EXCLUDING</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>UI_FUNCTIONS</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IT_EXCEPT_QINFO</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LVC_T_QINF</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_REPID</PARAMETER>
+       <DEFAULT>SY-CPROG</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SY-REPID</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_CUS_CONTAINER</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REF TO CL_GUI_CONTAINER</TYP>
+       <REF_CLASS>X</REF_CLASS>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_NODE_SEL_MODE</PARAMETER>
+       <DEFAULT>0</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_ITEM_SELECTION</PARAMETER>
+       <DEFAULT>&apos;X&apos;</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+     </IMPORT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>T_TREE_TAB</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ANY TABLE</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>T_FIELDCAT</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LVC_T_FCAT</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>IT_FILTER</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LVC_T_FILT</TYP>
+      </RSCHA>
+     </CHANGING>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_TREE_CONTROL</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REF TO CL_GUI_ALV_TREE</TYP>
+       <REF_CLASS>X</REF_CLASS>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_DOCK_CONTAINER</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REF TO CL_GUI_DOCKING_CONTAINER</TYP>
+       <REF_CLASS>X</REF_CLASS>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>E_CUS_CONTAINER</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REF TO CL_GUI_CUSTOM_CONTAINER</TYP>
+       <REF_CLASS>X</REF_CLASS>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_TREE_STR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Tree structure</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SHOW</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Use with docking container</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SIDE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Side to dock</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EXTENSION</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Extension of tree</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CUS_CONTROL_NAME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Custom container name</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_LASTCOL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Last column in fieldcat</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SORT_TABLE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Sort table by parents, key</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_HIERARCHY_HEADER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Tree Control: Attributes of the Hierarchy Header</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IS_VARIANT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Layout</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SAVE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Save Layout</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DEFAULT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Default Display Variant</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IS_EXCEPTION_FIELD</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Exception Field</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_SPECIAL_GROUPS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Field Groups</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_LOGO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Logo</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_BACKGROUND_ID</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>HTML Background</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_TOOLBAR_EXCLUDING</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Excluded Toolbar Standard Functions</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_EXCEPT_QINFO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Quickinfo for Exceptions</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_REPID</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_CUS_CONTAINER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Container for Custom Controls in the Screen Area</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_NODE_SEL_MODE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>CL_GUI_COLUMN_TREE=&gt;NODE_SEL_MODE_SINGLE</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_ITEM_SELECTION</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Indicator: Line selected</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_TREE_CONTROL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>ALV Tree Control</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_DOCK_CONTAINER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Docking Control Container</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_CUS_CONTAINER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Container for Custom Controls in the Screen Area</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_TREE_TAB</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_FIELDCAT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Field Catalog for Lis</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_FILTER</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>ALV control: Table of</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_CR_CACT</FUNCNAME>
      <SHORT_TEXT>CR CACT</SHORT_TEXT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>INVALID</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>INVALID</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>Invalid</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_CR_CDB</FUNCNAME>
      <SHORT_TEXT>CR CDB</SHORT_TEXT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>INVALID</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>INVALID</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>Invalid</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_EMAIL_CHECK</FUNCNAME>
      <SHORT_TEXT>Check email address</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_EMAIL</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>AD_SMTPADR</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>INVALID</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_EMAIL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>E-Mail Address</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>INVALID</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>Email invalid</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_SUBMIT_DATA_TO_SELOPT</FUNCNAME>
@@ -1811,26 +2823,273 @@
     <item>
      <FUNCNAME>ZFM_SUBMIT_DATA_TO_SELOPT2</FUNCNAME>
      <SHORT_TEXT>Convert data to select option</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_LOW</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_HIGH</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IR_SELOPT</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TABLE</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DATATYPE</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>CHAR10</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_DOMAIN</PARAMETER>
+       <DBFIELD>DD01L-DOMNAME</DBFIELD>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>ER_SELOPT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>RSDSSELOPT_T</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_LOW</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Low</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_HIGH</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>High</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IR_SELOPT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Select option</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DATATYPE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>&apos;MONTH&apos;; &apos;DATE&apos;; &apos;ALWNIT&apos;</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_DOMAIN</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Domain name</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ER_SELOPT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_SUBMIT_GET_PARA</FUNCNAME>
      <SHORT_TEXT>Get map parameter from submit program</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SYCPROG</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SPROG</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REPID</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>T_RSPARAM</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>RSPARAMS_TT</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Calling Program</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SPROG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Submit program</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_RSPARAM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>rsparams Table</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_SUBMIT_PROG</FUNCNAME>
      <SHORT_TEXT>Submit program</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <DEFAULT>SY-CPROG</DEFAULT>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SYCPROG</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_SPROG</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REPID</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_NO_AUTO_MAP</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>T_RSPARAM</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>RSPARAMS_TT</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_CPROG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Calling Program</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_SPROG</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Submit program</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_NO_AUTO_MAP</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Auto map paramaeters flag</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_RSPARAM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Parameter Table</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_SUBMIT_SELOPT_TO_PARAMS</FUNCNAME>
      <SHORT_TEXT>Convert select option to RSPARAMS</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_SELNAME</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>RSSCR_NAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IR_SELOPT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TABLE</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>ET_PARAMS</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>RSPARAMS_TT</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_SELNAME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>ABAP/4: Name of SELECT-OPTION / PARAMETER</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IR_SELOPT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Select option</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ET_PARAMS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>rsparams Table</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_VARIANT_GET</FUNCNAME>
      <SHORT_TEXT>Get value of a variant (Parameter)</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_VAR_NAME</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>RVARI_VNAM</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_VAR_VALUE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+      </RSEXP>
+     </EXPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>NOT_FOUND</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_VAR_NAME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>ABAP: Name of Variant Variable</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_VAR_VALUE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Variant value</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NOT_FOUND</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>Not found</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_VARIANT_GET_MULTI</FUNCNAME>
      <SHORT_TEXT>Get multi variants (Parameter)</SHORT_TEXT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>C_TVARVC</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>TVARVC_T</TYP>
+      </RSCHA>
+     </CHANGING>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>NOT_FOUND</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>C_TVARVC</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Table for TVARVC Structure</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NOT_FOUND</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>Not found</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZREUSE_ALV_GRID_COMMENTARY_SET</FUNCNAME>
