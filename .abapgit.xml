@@ -6,16 +6,6 @@
    <STARTING_FOLDER>/src/</STARTING_FOLDER>
    <FOLDER_LOGIC>PREFIX</FOLDER_LOGIC>
    <IGNORE> 
-    <item>/src/zfg_prog_maint.fugr.viewframe_zvi_bm_cond.abap</item>
-    <item>/src/zfg_prog_maint.fugr.viewframe_zvi_bm_cond_dim.abap</item>
-    <item>/src/zfg_prog_maint.fugr.viewproc_zvi_bm_cond.abap</item>
-    <item>/src/zfg_prog_maint.fugr.viewproc_zvi_bm_cond_dim.abap</item>
-    <item>/src/zjson.fugr.lzjsontop.abap</item>
-    <item>/src/zjson.fugr.lzjsontop.xml</item>
-    <item>/src/zst_bm_data_raw.tabl.xml</item>
-    <item>/src/ztb_bm_cstr_ms.tobj.xml</item>
-    <item>/src/zvc_bm_cstrc.tobj.xml</item>
-    <item>/src/zvi_bm_cstr_cv.tobj.xml</item> 
    </IGNORE>
   </DATA>
  </asx:values>
