@@ -14,6 +14,33 @@
     <item>
      <FUNCNAME>ZFM_ADDRESS_PROCESS</FUNCNAME>
      <SHORT_TEXT>Process address</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_REPL_SPACE</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>XMARK</TYP>
+      </RSIMP>
+     </IMPORT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>T_ADDRESS</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTT_ADDRESS</TYP>
+      </RSCHA>
+     </CHANGING>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_REPL_SPACE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Indicator: Line selected</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>T_ADDRESS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Address</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
     </item>
     <item>
      <FUNCNAME>ZFM_ALV_DISPLAY</FUNCNAME>
