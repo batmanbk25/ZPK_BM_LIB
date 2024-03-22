@@ -1289,6 +1289,34 @@
      </DOCUMENTATION>
     </item>
     <item>
+     <FUNCNAME>ZFM_DATA_STR_USER_LOG</FUNCNAME>
+     <SHORT_TEXT>User Log</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_ACTION</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>C</TYP>
+      </RSIMP>
+     </IMPORT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>CS_DATA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ANY</TYP>
+      </RSCHA>
+     </CHANGING>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_ACTION</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>CS_DATA</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
      <FUNCNAME>ZFM_DATA_SUBTRACT_STR</FUNCNAME>
      <SHORT_TEXT>Subtract between 2 structure using mark fields</SHORT_TEXT>
      <IMPORT>
