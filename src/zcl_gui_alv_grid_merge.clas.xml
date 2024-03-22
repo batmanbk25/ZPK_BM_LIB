@@ -23,6 +23,14 @@
      <DESCRIPT>Customize Style</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>Z_SET_MERGE_MULTI</CMPNAME>
+     <SCONAME>T_CELLS_MERGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Cell merge</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>
 </abapGit>
